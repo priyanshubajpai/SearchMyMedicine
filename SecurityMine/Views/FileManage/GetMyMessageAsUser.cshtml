@@ -1,0 +1,22 @@
+﻿
+@{
+    ViewBag.Title = "GetMyMessageAsUser";
+}
+
+<h2>GetMyMessageAsUser</h2>
+
+<table class="table table-striped">
+    @*<tr>
+            <td><strong>User Info</strong></td>
+            <td><strong>Roles</strong></td>
+        </tr>*@
+    @foreach (string text in ViewBag.Data)
+    {
+        <tr>
+            <td>@text</td>
+        </tr>
+
+
+    }
+</table>
+

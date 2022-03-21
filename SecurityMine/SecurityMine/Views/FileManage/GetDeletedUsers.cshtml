@@ -1,0 +1,24 @@
+﻿
+
+@{
+    ViewBag.Title = "GetDeletedUsers";
+}
+
+<h2>GetDeletedUsers</h2>
+
+<table class="table table-striped">
+    <tr>
+        <td><strong>User Info</strong></td>
+        <td><strong>Roles</strong></td>
+    </tr>
+    @foreach (string text in ViewBag.Data)
+    {
+            <tr>
+                <td>@text</td>
+                <td>Medical Store</td>
+            </tr>
+        
+
+    }
+</table>
+

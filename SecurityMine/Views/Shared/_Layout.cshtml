@@ -1,0 +1,128 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    <style>
+        #footer {
+            position: page;
+            bottom: 0;
+            left: 50%;
+            width: 960px;
+            margin-left: -480px;
+            height: 50px;
+            color: black
+        }
+        /*#footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 60px;*/ /* Height of the footer */
+        /*background: #6cf;
+        }*/
+        a.my-class {
+            color: #000 !important
+        }
+
+            a.my-class:active {
+                color: #000 !important
+            }
+
+            a.my-class:link {
+                color: #000 !important
+            }
+
+            a.my-class:visited {
+                color: #000 !important
+            }
+
+            a.my-class:hover {
+                color: #ff6a00 !important
+            }
+    </style>
+
+
+
+
+</head>
+<body>
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+
+                </button>
+                <img src="~/Content/Images/AppIconMine.png" class="img-circle" height="50" width="50" />
+                @Html.ActionLink("Book My Medicine", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Index", "Index", "Home", null, new { @class = "my-class" })</li>
+                    <li>@Html.ActionLink("About", "About", "Home", null, new { @class = "my-class" })</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home", null, new { @class = "my-class" })</li>
+                    <li>@Html.ActionLink("Home", "Home", "Home", null, new { @class = "my-class" })</li>
+                    @*<li>@Html.ActionLink("Admin Login", "MasterAdminLogin", "Home")</li>
+                        <li>@Html.ActionLink("Medical Store Login", "MedicalStoreLogin", "Home")</li>*@
+                </ul>
+
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <ul class="nav navbar-nav navbar-right">
+                        @if (User.Identity.Name == "Jack")
+                        {
+                            <li> <a href="#" class="glyphicon glyphicon-king my-class"> @User.Identity.Name (Admin)</a></li>
+                        }
+                        else
+                        {
+                            <li> <a href="#" class="glyphicon glyphicon-user my-class"> @User.Identity.Name</a></li>
+                        }
+
+                        <li>@Html.ActionLink(" Logout", "Logout", "Admin", "", new { @class = "glyphicon glyphicon-log-out my-class" })</li>
+                    </ul>
+                }
+
+                <ul class="nav navbar-nav navbar-right">
+                    @*<li> <a href="#" class="glyphicon glyphicon-user my-class"> @User.Identity.Name</a></li>*@
+                    @if (User.Identity.IsAuthenticated == false)
+                    {
+                        <li>@Html.ActionLink(" Login", "MasterAdminLogin", "Home", null, new { @class = "glyphicon glyphicon-log-in my-class" })</li>
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink(" Operations", "MasterAdminLogin", "Home", null, new { @class = "glyphicon glyphicon-cog my-class" })</li>
+                    }
+                    @*<li>@Html.ActionLink(" Store", "MedicalStoreLogin", "Home", null, new { @class = "glyphicon glyphicon-log-in my-class" })</li>*@
+                </ul>
+
+
+
+
+            </div>
+
+        </div>
+    </div>
+
+    <div class="container body-content">
+        @RenderBody()
+        @*<hr />*@
+        @*<center>
+                <footer id="footer">
+                    <p>&copy; @DateTime.Now.Year - My Book My Medicine Application</p>
+                </footer>
+            </center>*@
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

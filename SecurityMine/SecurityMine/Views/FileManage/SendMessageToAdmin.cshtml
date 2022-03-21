@@ -1,0 +1,25 @@
+﻿@using SecurityMine.Models
+@model SendMessageValidation
+@{
+    ViewBag.Title = "SendMessageToAdmin";
+}
+
+<h2>SendMessageToAdmin</h2>
+
+@using (Html.BeginForm("SendMyMessageToAdmin", "FileManage", FormMethod.Post))
+{
+    @Html.LabelFor(u => u.UserName)
+    <br />
+    @Html.TextBoxFor(u => u.UserName, new { value = ViewBag.UserName, @readonly = true })
+    @Html.ValidationMessageFor(u => u.UserName, "", new { @class = "text-danger" })
+
+    <br />
+    @Html.LabelFor(m => m.Message)
+    <br />
+    @Html.TextAreaFor(m => m.Message)
+    @Html.ValidationMessageFor(m => m.Message, "", new { @class = "text-danger" })
+    <br />
+    <input type="submit" value="Send My Message" class="btn btn-primary" />
+}
+
+

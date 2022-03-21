@@ -1,0 +1,40 @@
+﻿@using SecurityMine.Models
+@model List<AppUser>
+
+@{
+    ViewBag.Title = "DisplayAllUsers";
+}
+
+<h2>DisplayAllUsers</h2>
+
+<table class="table table-striped">
+    <tr>
+        <td><strong>UserName</strong></td>
+        <td><strong>Email</strong></td>
+        <td><strong>Phone Number</strong></td>
+        <td><strong>Roles</strong></td>
+    </tr>
+    @foreach (AppUser u in Model)
+    {
+        if (u.UserName.Equals("Jack") == false)
+        {
+<tr>
+    <td>@u.UserName</td>
+    <td>@u.Email</td>
+    <td>@u.PhoneNumber</td>
+    <td>Medical Store</td>
+    <td>
+        @Html.ActionLink("Delete", "DeleteUser", "Admin", new { id = u.Id }, new { @class = "btn btn-danger" })
+    </td>
+    <td>
+        @Html.ActionLink("Reset Password", "ResetPasswordAfterLogin", "Admin", new { u.UserName }, new { @class = "btn btn-primary" })
+    </td>
+    <td>
+        @Html.ActionLink("Send Message", "SendMessageToUser", "FileManage", new { u.UserName }, new { @class = "btn btn-warning" })
+    </td>
+</tr>
+        }
+
+    }
+</table>
+

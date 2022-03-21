@@ -1,0 +1,113 @@
+﻿@using SecurityMine.Models
+@model NewAspUser
+
+<h2>Register New Medical Store</h2>
+
+@using (Html.BeginForm("AddUser", "Admin", FormMethod.Post, new { id = "myform" }))
+{
+    @Html.LabelFor(u => u.UserName)
+    <br />
+    @Html.TextBoxFor(u => u.UserName)
+    @Html.ValidationMessageFor(u => u.UserName, "", new { @class = "text-danger" })
+    <br />
+    @Html.LabelFor(u => u.Email)
+    <br />
+    @Html.TextBoxFor(u => u.Email)
+    @Html.ValidationMessageFor(u => u.Email, "", new { @class = "text-danger" })
+    <br />
+    @Html.LabelFor(u => u.PhoneNumber)
+    <br />
+    @Html.TextBoxFor(u => u.PhoneNumber)
+    @Html.ValidationMessageFor(u => u.PhoneNumber, "", new { @class = "text-danger" })
+    <br />
+    @Html.LabelFor(u => u.Password)
+    <br />
+    @Html.TextBoxFor(u => u.Password, new { type = "password", id = "password" })
+    <span>
+        <i class="fa fa-eye" aria-hidden="true" id="eye" onclick="toggle()"></i>
+    </span>
+    @Html.ValidationMessageFor(u => u.Password, "", new { @class = "text-danger" })
+    <br />
+    @Html.LabelFor(u => u.RetypePassword)
+    <br />
+    @Html.TextBoxFor(u => u.RetypePassword, new { type = "password", id = "cnfrm-password" })
+    @Html.ValidationMessageFor(u => u.RetypePassword, "", new { @class = "text-danger" })
+    <br />
+    <p id="message"></p>
+    <br />
+    <input type="button" value="Register New Member" onclick="checkPassword()" class="btn btn-warning" />
+}
+
+
+@section scripts
+{
+
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+    @*<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+        <script>
+
+            $(document).ready(function () {
+                $('#password,#confirmPassword').on('keyup', function () {
+                    if ($('#password').val() == $('#confirmPassword').val()) {
+                        $('#message').html("Password Match").css('color', 'green');
+                    }
+                    else {
+                        $('#message').html("Password Do Not Match").css('color', 'red');
+                    }
+                }
+
+
+                );
+
+            });
+        </script>*@
+    <script>
+        function checkPassword() {
+            let password = document.getElementById("password").value;
+            let cnfrmPassword = document.getElementById("cnfrm-password").value;
+            console.log(" Password:", password, '\n', "Confirm Password:", cnfrmPassword);
+            let message = document.getElementById("message");
+
+            if (password.length != 0) {
+                if (password == cnfrmPassword) {
+                    message.textContent = "Passwords match";
+                    /*message.style.backgroundColor = "#1dcd59";*/
+                    message.style.color = "green";
+                    document.getElementById("myform").submit();
+                }
+                else {
+                    message.textContent = "Password do not match";
+                    /*message.style.backgroundColor = "#ff4d4d";*/
+                    message.style.color = "red";
+                }
+
+            }
+            else {
+                document.getElementById("myform").submit();
+            }
+        }
+    </script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script>
+        var state = false;
+        function toggle() {
+            if (state) {
+                document.getElementById("password").setAttribute("type", "password");
+                document.getElementById("eye").style.color = "black";
+                document.getElementById("eye").style.border = "groove"
+                state = false;
+            }
+            else {
+                document.getElementById("password").setAttribute("type", "text");
+                document.getElementById("eye").style.color = '#5887ef';
+                state = true;
+            }
+        }
+    </script>
+}
+
+

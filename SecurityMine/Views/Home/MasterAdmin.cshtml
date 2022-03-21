@@ -1,0 +1,121 @@
+﻿@using SecurityMine.Models
+@model NewAspUser
+
+
+<center>
+    <h2><strong>Register New Store</strong></h2>
+
+    @using (Html.BeginForm("AddUser", "Admin", FormMethod.Post, new { @class = "form-horizontal", id = "myform" }))
+    {
+        <div class="form-group">
+            @Html.LabelFor(u => u.UserName, new { @class = "control-label" })
+            <br />
+            @Html.TextBoxFor(u => u.UserName, new { @class = "form-control" })
+            @Html.ValidationMessageFor(u => u.UserName, "", new { @class = "text-danger" })
+            <br />
+            @Html.LabelFor(u => u.Email, new { @class = "control-label" })
+            <br />
+            @Html.TextBoxFor(u => u.Email, new { @class = "form-control" })
+            @Html.ValidationMessageFor(u => u.Email, "", new { @class = "text-danger" })
+            <br />
+            @Html.LabelFor(u => u.PhoneNumber, new { @class = "control-label" })
+            <br />
+            @Html.TextBoxFor(u => u.PhoneNumber, new { @class = "form-control" })
+            @Html.ValidationMessageFor(u => u.PhoneNumber, "", new { @class = "text-danger" })
+            <br />
+            @Html.LabelFor(u => u.Password, new { @class = "control-label" })
+            <br />
+            @Html.TextBoxFor(u => u.Password, new { @class = "form-control", type = "password", id = "password" })
+            <p>
+                <span>
+                    <i class="fa fa-eye" aria-hidden="true" id="eye" onclick="toggle()"></i>
+                </span>
+                <strong><i>Show/Hide Password</i></strong>
+
+            </p>
+            @Html.ValidationMessageFor(u => u.Password, "", new { @class = "text-danger" })
+            <br />
+            @Html.LabelFor(u => u.RetypePassword, new { @class = "control-label" })
+            <br />
+            @Html.TextBoxFor(u => u.RetypePassword, new { @class = "form-control", type = "password", id = "cnfrm-password" })
+            @Html.ValidationMessageFor(u => u.RetypePassword, "", new { @class = "text-danger" })
+            <br />
+            <p id="message"></p>
+            <input type="button" value="Register" onclick="checkPassword()" class="btn btn-success" />
+        </div>
+    }
+</center>   
+
+
+        @section scripts
+{
+
+            <script src="~/Scripts/jquery.validate.min.js"></script>
+            <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+            @*<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+                <script>
+
+                    $(document).ready(function () {
+                        $('#password,#confirmPassword').on('keyup', function () {
+                            if ($('#password').val() == $('#confirmPassword').val()) {
+                                $('#message').html("Password Match").css('color', 'green');
+                            }
+                            else {
+                                $('#message').html("Password Do Not Match").css('color', 'red');
+                            }
+                        }
+
+
+                        );
+
+                    });
+                </script>*@
+            <script>
+                function checkPassword() {
+                    let password = document.getElementById("password").value;
+                    let cnfrmPassword = document.getElementById("cnfrm-password").value;
+                    console.log(" Password:", password, '\n', "Confirm Password:", cnfrmPassword);
+                    let message = document.getElementById("message");
+
+                    if (password.length != 0) {
+                        if (password == cnfrmPassword) {
+                            message.textContent = "Passwords match";
+                            /*message.style.backgroundColor = "#1dcd59";*/
+                            message.style.color = "green";
+                            document.getElementById("myform").submit();
+                        }
+                        else {
+                            message.textContent = "Password do not match";
+                            /*message.style.backgroundColor = "#ff4d4d";*/
+                            message.style.color = "red";
+                        }
+
+                    }
+                    else {
+                        document.getElementById("myform").submit();
+                    }
+                }
+            </script>
+
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+            <script>
+                var state = false;
+                function toggle() {
+                    if (state) {
+                        document.getElementById("password").setAttribute("type", "password");
+                        document.getElementById("eye").style.color = "black";
+                        document.getElementById("eye").style.border = "groove"
+                        state = false;
+                    }
+                    else {
+                        document.getElementById("password").setAttribute("type", "text");
+                        document.getElementById("eye").style.color = '#5887ef';
+                        state = true;
+                    }
+                }
+            </script>
+        }
+
+

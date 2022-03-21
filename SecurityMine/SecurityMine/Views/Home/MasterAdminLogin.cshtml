@@ -1,0 +1,56 @@
+﻿@using SecurityMine.Models
+@model ReadMessagesValidation
+@{
+    ViewBag.Title = "MasterAdminLogin";
+}
+
+<h2>MasterAdmin Access Field to Perform Operations</h2>
+<br />
+
+@if (ViewBag.NoSuchUserPresent != null)
+{
+    <script>
+        alert("No Such Medical Store Exist!!");
+    </script>
+}
+
+@if (ViewBag.New=="yes")
+{
+    <script>
+        alert("New Messages Found!!");
+    </script>
+}
+
+<form action="/Home/MasterAdmin">
+    <input type="submit" value="Register New Medical Store" class="btn btn-info" />
+</form>
+
+<br />
+
+@using (Html.BeginForm("ChangePassword", "Admin"))
+{
+    <input type="submit" value="Update My Password" class="btn btn-warning" />
+}
+
+<br />
+
+@using (Html.BeginForm("DisplayAllUsers", "Admin"))
+{
+    <input type="submit" value="Get All Users" class="btn btn-primary" />
+}
+<br />
+@using (Html.BeginForm("GetDeletedUsers", "FileManage"))
+{
+    <input type="submit" value="Get Deleted Users" class="btn btn-danger" />
+}
+<br />
+@using (Html.BeginForm("GetMyMessageAsAdmin", "FileManage", FormMethod.Post))
+{
+    @Html.LabelFor(u => u.UserName)
+    <br />
+    @Html.TextBoxFor(u => u.UserName)
+    @Html.ValidationMessageFor(u => u.UserName, "", new { @class = "text-danger" })
+    <br />
+    <br />
+    <input type="submit" value="My Messages" class="btn btn-warning" />
+}

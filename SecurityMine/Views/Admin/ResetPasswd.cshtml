@@ -1,0 +1,98 @@
+﻿@using SecurityMine.Models
+@model ResetPasswordValidation
+
+@{
+    ViewBag.Title = "ResetPasswd";
+}
+
+@if (ViewBag.Message != null)
+{
+    <script>
+        alert("No Such Medical Store Exist!!");
+    </script>
+}
+
+<center>
+    <h2><strong>Reset Password</strong></h2>
+
+    <form method="post" action="/Admin/ResetPassword" id="resetform" class="form-horizontal">
+        @Html.LabelFor(u => u.UserName, new { @class = "control-label" })
+        <br />
+        @Html.TextBoxFor(u => u.UserName, new { @class = "form-control" })
+        @Html.ValidationMessageFor(u => u.UserName, "", new { @class = "text-danger" })
+        <br />
+        @Html.LabelFor(p => p.New_Password, new { @class = "control-label" })
+        <br />
+        @Html.TextBoxFor(p => p.New_Password, new { @class = "form-control", type = "password", id = "password" })
+        <p>
+            <span>
+                <i class="fa fa-eye" aria-hidden="true" id="eye" onclick="toggle()"></i>
+            </span>
+            <strong><i>Show/Hide Password</i></strong>
+
+        </p>
+        @Html.ValidationMessageFor(p => p.New_Password, "", new { @class = "text-danger" })
+        <br />
+        @Html.LabelFor(p => p.Retype_Password, new { @class = "control-label" })
+        <br />
+        @Html.TextBoxFor(p => p.Retype_Password, new { @class = "form-control", type = "password", id = "cnfrm-password" })
+        @Html.ValidationMessageFor(p => p.Retype_Password, "", new { @class = "text-danger" })
+        <p id="message"></p>
+        <br />
+        <input type="button" value="Reset My Password" onclick="checkPassword()" class="btn btn-info" />
+    </form>
+</center>
+
+
+@section scripts
+{
+
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+    <script>
+        function checkPassword() {
+            let password = document.getElementById("password").value;
+            let cnfrmPassword = document.getElementById("cnfrm-password").value;
+            console.log(" Password:", password, '\n', "Confirm Password:", cnfrmPassword);
+            let message = document.getElementById("message");
+
+            if (password.length != 0) {
+                if (password == cnfrmPassword) {
+                    message.textContent = "Passwords match";
+                    /*message.style.backgroundColor = "#1dcd59";*/
+                    message.style.color = "green";
+                    document.getElementById("resetform").submit();
+                }
+                else {
+                    message.textContent = "Password do not match";
+                    /*message.style.backgroundColor = "#ff4d4d";*/
+                    message.style.color = "red";
+                }
+
+            }
+            else {
+                document.getElementById("resetform").submit();
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script>
+        var state = false;
+        function toggle() {
+            if (state) {
+                document.getElementById("password").setAttribute("type", "password");
+                document.getElementById("eye").style.color = "black";
+                document.getElementById("eye").style.border = "groove"
+                state = false;
+            }
+            else {
+                document.getElementById("password").setAttribute("type", "text");
+                document.getElementById("eye").style.color = '#5887ef';
+                state = true;
+            }
+        }
+    </script>
+
+}
+

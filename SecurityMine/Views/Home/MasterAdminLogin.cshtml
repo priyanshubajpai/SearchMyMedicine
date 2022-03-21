@@ -1,0 +1,185 @@
+﻿@using SecurityMine.Models
+@model ReadMessagesValidation
+
+@if (ViewContext.HttpContext.User.IsInRole("Administrator"))
+{
+    <style>
+        .heading {
+            font-family: cursive;
+        }
+
+        .btn-group {
+            padding-left: 2px;
+            padding-right: 2px; /*//to add space in btn justified*/
+        }
+
+        a.my-btn {
+            color: #000 !important
+        }
+
+            a.my-btn:active {
+                color: #000 !important
+            }
+
+            a.my-btn:link {
+                color: #000 !important
+            }
+
+            a.my-btn:visited {
+                color: #000 !important
+            }
+
+            a.my-btn:hover {
+                color: white !important
+            }
+    </style>
+
+    ViewBag.Title = "Administrator Login";
+
+
+    if (ViewBag.NoSuchUserPresent != null)
+    {
+        <script>
+        /*alert("No Such Medical Store Exist!!");*/
+        alert("Either " + "@ViewBag.NoSuchUserPresent " + "is not a registered Medical Store or no conversation has started yet...Try starting the converstion by sending a message!!!");
+        </script>
+    }
+
+    if (ViewBag.New == "yes")
+    {
+        <script>
+            alert("New Messages Found!!");
+        </script>
+    }
+    <br />
+    @*<form action="/Home/MasterAdmin">
+            <input type="submit" value="Register New Medical Store" class="btn btn-info" />
+        </form>*@
+
+    <center>
+        <h2 class="heading">Adminstrator Operations</h2>
+    </center>
+    <br />
+    <div class="btn-group-justified">
+        <div class="btn-group">
+            @Html.ActionLink(" Register New Medical Store", "MasterAdmin", "Home", null, new { @class = "glyphicon glyphicon-plus btn btn-info my-btn" })
+        </div>
+        <div class="btn-group">
+            @Html.ActionLink(" Update Password", "ChangePasswd", "Admin", null, new { @class = "glyphicon glyphicon-edit btn btn-info my-btn" })
+        </div>
+        <div class="btn-group">
+            @Html.ActionLink(" Display Registered Stores", "DisplayAllUsers", "Admin", null, new { @class = "glyphicon glyphicon-th-list btn btn-info my-btn" })
+        </div>
+        <div class="btn-group">
+            @Html.ActionLink(" List Deregistered Users", "GetDeletedUsers", "FileManage", null, new { @class = "glyphicon glyphicon-trash btn btn-info my-btn" })
+        </div>
+    </div>
+
+
+    <br />
+
+    @*using (Html.BeginForm("ChangePasswd", "Admin"))
+        {
+            <input type="submit" value="Update My Password" class="btn btn-warning" />
+        }
+
+        <br />
+
+        using (Html.BeginForm("DisplayAllUsers", "Admin"))
+        {
+            <input type="submit" value="Get All Users" class="btn btn-primary" />
+        }
+        <br />
+        using (Html.BeginForm("GetDeletedUsers", "FileManage"))
+        {
+            <input type="submit" value="Get Deleted Users" class="btn btn-danger" />
+        }
+        <br />*@
+    <br />
+    @*using (Html.BeginForm("GetMyMessageAsAdmin", "FileManage", FormMethod.Post))
+        {
+            @Html.LabelFor(u => u.UserName)
+            <br />
+            @Html.TextBoxFor(u => u.UserName)
+            @Html.ValidationMessageFor(u => u.UserName, "", new { @class = "text-danger" })
+
+            <br />
+            <br />
+            <input type="submit" value="My Messages" class="btn btn-warning" />
+        }*@
+
+    <center>
+        @using (Html.BeginForm("GetMyMessageAsAdmin", "FileManage", FormMethod.Post))
+        {
+            @*@Html.LabelFor(u => u.UserName)
+                <br />*@
+            @Html.TextBoxFor(u => u.UserName, new { placeholder = "Enter UserName" })
+            @Html.ValidationMessageFor(u => u.UserName, "", new { @class = "text-danger" })
+            @*<p id="errormsg"></p>*@
+            <button class="glyphicon glyphicon-folder-open btn btn-success float-right" type="submit"> View Messages</button>
+            <p id="errormsg"></p>
+        }
+    </center>
+}
+
+@*/-------------------------------------------------------------------------------------------/*@
+
+@if (ViewContext.HttpContext.User.IsInRole("MedicalStore"))
+{
+    if (ViewBag.NoSuchUserPresent != null)
+    {
+        <script>
+        /*alert("No Such Medical Store Exist!!");*/
+        alert("@ViewBag.NoSuchUserPresent : " + "No conversation has started yet...Try starting the converstion by sending a message!!!");
+        </script>
+    }
+    <style>
+        .heading {
+            font-family: cursive;
+        }
+    </style>
+
+    ViewBag.Title = "Medical Store Login";
+    <br />
+    <center>
+        <h2 class="heading">Store Operations</h2>
+    </center>
+
+    @*using (Html.BeginForm("ChangePasswd", "Admin"))
+        {
+            <input type="submit" value="Change Password" class="btn btn-info" />
+        }*@
+
+    <center>
+        @Html.ActionLink(" Update Password", "ChangePasswd", "Admin", null, new { @class = "glyphicon glyphicon-edit btn btn-info my-btn" })
+        <br />
+        <br />
+        @using (Html.BeginForm("SendMessageToAdmin", "FileManage", FormMethod.Post))
+        {
+            @*@Html.LabelFor(u => u.UserName)
+                <br />*@
+            @Html.TextBoxFor(u => u.UserName, new { @Value = User.Identity.Name, @readonly = true })
+            @Html.ValidationMessageFor(u => u.UserName, "", new { @class = "text-danger" })
+            <br />
+            <br />
+            @*<input type="submit" value="Send Message To Admin" class="btn btn-warning" />*@
+            <button class="glyphicon glyphicon-folder-open btn btn-success float-right" type="submit"> Message Admin</button>
+        }
+        <br />
+        @if (ViewBag.NoSuchUserPresent == null)
+        {
+            using (Html.BeginForm("GetMyMessageAsUser", "FileManage", FormMethod.Post))
+            {
+                @*@Html.LabelFor(u => u.UserName)
+                    <br />*@
+                @Html.TextBoxFor(u => u.UserName, new { @Value = User.Identity.Name, @readonly = true })
+                @Html.ValidationMessageFor(u => u.UserName, "", new { @class = "text-danger" })
+                <br />
+                <br />
+                @*<input type="submit" value="My Messages" class="btn btn-warning" />*@
+                <button class="glyphicon glyphicon-folder-open btn btn-success float-right" type="submit"> View Messages</button>
+            }
+        }
+    </center>
+
+}

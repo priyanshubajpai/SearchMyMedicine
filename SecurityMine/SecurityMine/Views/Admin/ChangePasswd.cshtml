@@ -1,0 +1,84 @@
+﻿@using SecurityMine.Models
+@model ChangePasswordValidation
+
+@{
+    ViewBag.Title = "ChangePasswd";
+}
+
+<h2>ChangePassword</h2>
+
+@using (Html.BeginForm("ChangePassword", "Admin", FormMethod.Post, new { id = "changepasswdform" }))
+{
+    @Html.LabelFor(p => p.Current_Password)
+    <br />
+    @Html.TextBoxFor(p => p.Current_Password, new { type = "password" })
+    @Html.ValidationMessageFor(p => p.Current_Password,"", new { @class = "text-danger" })
+    <br />
+    @Html.LabelFor(p => p.New_Password)
+    <br />
+    @Html.TextBoxFor(p => p.New_Password, htmlAttributes: new { type = "password", id = "password" })
+    <span>
+        <i class="fa fa-eye" aria-hidden="true" id="eye" onclick="toggle()"></i>
+    </span>
+    @Html.ValidationMessageFor(p => p.New_Password, "", new { @class = "text-danger" })
+    <br />
+    @Html.LabelFor(p => p.Retype_Password)
+    <br />
+    @Html.TextBoxFor(p => p.Retype_Password, htmlAttributes: new { type = "password", id = "cnfrm-password" })
+    @Html.ValidationMessageFor(p => p.Retype_Password, "", new { @class = "text-danger" })
+    <p id="message"></p>
+    <br />
+    <input type="button" value="Update My Password" onclick="checkPassword()" class="btn btn-warning" />
+}
+
+@section scripts
+{
+
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+    <script>
+        function checkPassword() {
+            let password = document.getElementById("password").value;
+            let cnfrmPassword = document.getElementById("cnfrm-password").value;
+            console.log(" Password:", password, '\n', "Confirm Password:", cnfrmPassword);
+            let message = document.getElementById("message");
+
+            if (password.length != 0) {
+                if (password == cnfrmPassword) {
+                    message.textContent = "Passwords match";
+                    /*message.style.backgroundColor = "#1dcd59";*/
+                    message.style.color = "green";
+                    document.getElementById("changepasswdform").submit();
+                }
+                else {
+                    message.textContent = "Password do not match";
+                    /*message.style.backgroundColor = "#ff4d4d";*/
+                    message.style.color = "red";
+                }
+
+            }
+            else {
+                document.getElementById("changepasswdform").submit();
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script>
+        var state = false;
+        function toggle() {
+            if (state) {
+                document.getElementById("password").setAttribute("type", "password");
+                document.getElementById("eye").style.color = "black";
+                document.getElementById("eye").style.border = "groove"
+                state = false;
+            }
+            else {
+                document.getElementById("password").setAttribute("type", "text");
+                document.getElementById("eye").style.color = '#5887ef';
+                state = true;
+            }
+        }
+    </script>
+
+}

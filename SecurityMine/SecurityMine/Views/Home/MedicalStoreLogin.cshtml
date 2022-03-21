@@ -1,0 +1,49 @@
+﻿@using SecurityMine.Models
+@model ReadMessagesValidation
+
+@{
+    ViewBag.Title = "MedicalStoreLogin";
+}
+
+@if (ViewBag.NoSuchUserPresent != null)
+{
+    <script>
+        alert("No Such Medical Store Exist!!");
+    </script>
+}
+
+<h2>MedicalStoreLogin</h2>
+
+
+<h1>Master Admin as well as Medical Store can perform CRUD operations</h1>
+
+@if (ViewContext.HttpContext.User.IsInRole("MedicalStore"))
+{
+    using (Html.BeginForm("ChangePasswd", "Admin"))
+    {
+        <input type="submit" value="Change Password" class="btn btn-info" />
+    }
+    <br />
+    using (Html.BeginForm("SendMessageToAdmin", "FileManage", FormMethod.Post))
+    {
+        @Html.LabelFor(u => u.UserName)
+        <br />
+        @Html.TextBoxFor(u => u.UserName, new { @Value = ViewData["Name"], @readonly = true })
+        @Html.ValidationMessageFor(u => u.UserName, "", new { @class = "text-danger" })
+        <br />
+        <br />
+        <input type="submit" value="Send Message To Admin" class="btn btn-warning" />
+    }
+    <br />
+    using (Html.BeginForm("GetMyMessageAsUser", "FileManage", FormMethod.Post))
+    {
+        @Html.LabelFor(u => u.UserName)
+        <br />
+        @Html.TextBoxFor(u => u.UserName, new { @Value = ViewData["Name"], @readonly = true })
+        @Html.ValidationMessageFor(u => u.UserName, "", new { @class = "text-danger" })
+        <br />
+        <br />
+        <input type="submit" value="My Messages" class="btn btn-warning" />
+    }
+}
+
