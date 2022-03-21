@@ -40,7 +40,10 @@ namespace SecurityMine.Models
             return new AppIdentityDbContext();
         }
 
-       
+        public DbSet<Address> Addresses { get; set; }
+        public DbSet<Medicine> Medicines { get; set; }
+        public DbSet<StoreManagement> StoreManagements { get; set; }
+
     }
 
     public class AppUserManager : UserManager<AppUser>
@@ -157,20 +160,5 @@ namespace SecurityMine.Models
 
         [ForeignKey("MedicineId")]
         public Medicine Medicine { get; set; }
-    }
-
-    //public class CustomContext:AppIdentityDbContext
-    //{
-    //    public DbSet<Address> Addresses { get; set; }
-    //    public DbSet<Medicine> Medicines { get; set; }
-    //    public DbSet<StoreManagement> StoreManagements { get; set; }
-
-    //    public CustomContext()
-    //    {
-
-    //    }
-    //}
-
-
-    
+    } 
 }

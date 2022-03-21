@@ -52,17 +52,45 @@ namespace SecurityMine.Controllers
 
                 address.UserId = id;
 
-                AppUser appUser = new AppUser() {UserName="ABC", Email ="abc@gmail.com", PhoneNumber = "12345"};
-                appUser.Addresses.Add(address);
+                //AppUser appUser = new AppUser();
+                //appUser.Addresses.Add(address);
 
-                //AppIdentityDbContext context = new AppIdentityDbContext();
-                //context.Addresses.Add(address);
+                AppIdentityDbContext context = new AppIdentityDbContext();
 
-                //CustomContext context = new CustomContext();
-                //context.Addresses.Add(address);
+                var res=context.Addresses.SingleOrDefault(adrs=>adrs.UserId==id);
+                if(res==null)
+                {
+                    context.Addresses.Add(address);
+                    context.SaveChanges();
+                }
+                else
+                {
+                    context.Addresses.Remove(res);
+                    context.Addresses.Add(address);
+                    context.SaveChanges();
+                }
 
+                
                 return View("~/Views/Admin/Thanks.cshtml", obj);
             }
+        }
+
+        public ActionResult DisplayContactDetail(string id)
+        {
+            AppIdentityDbContext context = new AppIdentityDbContext();
+
+            var res = context.Addresses.SingleOrDefault(adrs => adrs.UserId == id);
+            ViewBag.AddressLine = res.AddressLine;
+            ViewBag.Dist = res.District;
+            ViewBag.City = res.City;
+            ViewBag.Pin = res.PinCode;
+            ViewBag.State = res.State;
+            ViewBag.Country = res.Country;
+
+            AppUser user = UserManager.FindById(id);
+            ViewBag.Name = user.UserName;
+            //ViewBag.Info = res.AddressLine + " " + res.District + " " + res.City + " " + res.PinCode + " " + res.State + " " + res.Country;
+            return View();
         }
     }
 }

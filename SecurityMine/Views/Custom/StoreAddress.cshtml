@@ -12,38 +12,38 @@
     @Html.LabelFor(a => a.AddressLine)
     <br />
     @Html.TextAreaFor(a => a.AddressLine)
-    @Html.ValidationMessageFor(a => a.AddressLine)
+    @Html.ValidationMessageFor(a => a.AddressLine,"",new {@class="text-danger"})
     <br />
 
 
     @Html.LabelFor(a => a.District)
     <br />
     @Html.TextBoxFor(a => a.District)
-    @Html.ValidationMessageFor(a => a.District)
+    @Html.ValidationMessageFor(a => a.District, "", new { @class = "text-danger" })
     <br />
 
     @Html.LabelFor(a => a.City)
     <br />
     @Html.TextBoxFor(a => a.City)
-    @Html.ValidationMessageFor(a => a.City)
+    @Html.ValidationMessageFor(a => a.City, "", new { @class = "text-danger" })
     <br />
 
     @Html.LabelFor(a => a.PinCode)
     <br />
     @Html.TextBoxFor(a => a.PinCode)
-    @Html.ValidationMessageFor(a => a.PinCode)
+    @Html.ValidationMessageFor(a => a.PinCode, "", new { @class = "text-danger" })
     <br />
 
     @Html.LabelFor(a => a.State)
     <br />
     @Html.TextBoxFor(a => a.State)
-    @Html.ValidationMessageFor(a => a.State)
+    @Html.ValidationMessageFor(a => a.State, "", new { @class = "text-danger" })
     <br />
 
     @Html.LabelFor(a => a.Country)
     <br />
     @Html.TextBoxFor(a => a.Country)
-    @Html.ValidationMessageFor(a => a.Country)
+    @Html.ValidationMessageFor(a => a.Country, "", new { @class = "text-danger" })
     <br />
 
     <input type="submit" value="Update Info" class="btn btn-info" />

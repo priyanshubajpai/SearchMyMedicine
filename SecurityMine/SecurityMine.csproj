@@ -225,6 +225,7 @@
     <Content Include="Views\FileManage\SendMessageToAdmin.cshtml" />
     <Content Include="Views\FileManage\GetMyMessageAsUser.cshtml" />
     <Content Include="Views\Custom\StoreAddress.cshtml" />
+    <Content Include="Views\Custom\DisplayContactDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

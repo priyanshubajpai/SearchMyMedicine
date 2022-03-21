@@ -20,21 +20,24 @@
     {
         if (u.UserName.Equals("Jack") == false)
         {
-            <tr>
-                <td>@u.UserName</td>
-                <td>@u.Email</td>
-                <td>@u.PhoneNumber</td>
-                <td>Medical Store</td>
-                <td>
-                    @Html.ActionLink("Delete", "DeleteUser", "Admin", new { id = u.Id }, new { @class = "btn btn-danger" })
-                </td>
-                <td>
-                    @Html.ActionLink("Reset Password", "ResetPasswordAfterLogin", "Admin", new { u.UserName }, new { @class = "btn btn-primary" })
-                </td>
-                <td>
-                    @Html.ActionLink("Send Message", "SendMessageToUser", "FileManage", new { u.UserName }, new { @class = "btn btn-warning" })
-                </td>
-            </tr>
+<tr>
+    <td>@u.UserName</td>
+    <td>@u.Email</td>
+    <td>@u.PhoneNumber</td>
+    <td>Medical Store</td>
+    <td>
+        @Html.ActionLink("Delete", "DeleteUser", "Admin", new { id = u.Id }, new { @class = "btn btn-danger" })
+    </td>
+    <td>
+        @Html.ActionLink("Reset Password", "ResetPasswordAfterLogin", "Admin", new { u.UserName }, new { @class = "btn btn-primary" })
+    </td>
+    <td>
+        @Html.ActionLink("Send Message", "SendMessageToUser", "FileManage", new { u.UserName }, new { @class = "btn btn-warning" })
+    </td>
+    <td>
+        @Html.ActionLink("Contact Details", "DisplayContactDetail", "Custom", new { u.Id }, new { @class = "btn btn-warning" })
+    </td>
+</tr>
         }
 
     }
