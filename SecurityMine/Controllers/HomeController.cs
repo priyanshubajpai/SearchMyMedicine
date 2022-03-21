@@ -80,6 +80,8 @@ namespace SecurityMine.Controllers
             //}
             //ViewBag.UserList = new SelectList(UserManager.Users.ToList(), "UserName", "UserName");
 
+            ViewBag.UserId = id;
+
             return View();
         }
 

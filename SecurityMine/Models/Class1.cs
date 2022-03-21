@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 
@@ -19,6 +20,7 @@ namespace SecurityMine.Models
         public virtual ICollection<Address> Addresses { get; set; }
         public virtual ICollection<Medicine> Medicines { get; set; }
         public virtual ICollection<StoreManagement> StoreManagements { get; set; }
+
     }
 
     public class AppIdentityDbContext:IdentityDbContext<AppUser>
@@ -37,6 +39,8 @@ namespace SecurityMine.Models
         {
             return new AppIdentityDbContext();
         }
+
+       
     }
 
     public class AppUserManager : UserManager<AppUser>
@@ -155,7 +159,17 @@ namespace SecurityMine.Models
         public Medicine Medicine { get; set; }
     }
 
+    //public class CustomContext:AppIdentityDbContext
+    //{
+    //    public DbSet<Address> Addresses { get; set; }
+    //    public DbSet<Medicine> Medicines { get; set; }
+    //    public DbSet<StoreManagement> StoreManagements { get; set; }
 
+    //    public CustomContext()
+    //    {
+
+    //    }
+    //}
 
 
     
