@@ -182,7 +182,12 @@
         }
         <br />
         @Html.ActionLink("Update Address", "StoreAddress", "Custom", new {ViewBag.UserId}, new {@class="btn btn-info"})
-
+        <br />
+        <br />
+        @Html.ActionLink("Add New Medicine", "AddMedicine", "Custom", new {ViewBag.UserId},new {@class="btn btn-info"})
+        <br />
+        <br />
+        @Html.ActionLink("Display Medicine List","DisplayMedicineList","Custom",new {ViewBag.UserId}, new { @class = "btn btn-info" })
     </center>
 
 }

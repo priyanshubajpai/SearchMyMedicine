@@ -1,0 +1,26 @@
+﻿@using SecurityMine.Models
+@model List<AddMedicineValidation>
+
+@{
+    ViewBag.Title = "DisplayMedicineList";
+}
+
+<h2>DisplayMedicineList</h2>
+
+<table class="table table-striped">
+    @*<tr>
+            <td><strong>User Info</strong></td>
+            <td><strong>Roles</strong></td>
+        </tr>*@
+    @foreach (AddMedicineValidation obj in ViewBag.List)
+    {
+    <tr>
+        <td>@obj.MedicineName</td>
+        <td>@obj.MedicineType</td>
+        <td>@obj.Expiry</td>
+        <td>@obj.Price</td>
+        <td>@obj.Stock</td>
+    </tr>
+}
+</table>
+

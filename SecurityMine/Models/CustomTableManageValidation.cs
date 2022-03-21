@@ -26,4 +26,22 @@ namespace SecurityMine.Models
         [Required]
         public string Country { get; set; }
     }
+
+    public class AddMedicineValidation
+    {
+        [Required]
+        public string MedicineName { get; set; }
+
+        [Required]
+        public string MedicineType { get; set; }
+
+        [Required]
+        public DateTime Expiry { get; set; }
+
+        [Required]
+        public float Price { get; set; }
+
+        [Required]
+        public int Stock { get; set; }
+    }
 }

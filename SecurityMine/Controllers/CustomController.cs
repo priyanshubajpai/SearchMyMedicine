@@ -92,5 +92,102 @@ namespace SecurityMine.Controllers
             //ViewBag.Info = res.AddressLine + " " + res.District + " " + res.City + " " + res.PinCode + " " + res.State + " " + res.Country;
             return View();
         }
+
+        public ActionResult AddMedicine()
+        {
+            AddMedicineValidation obj = new AddMedicineValidation();
+            return View(obj);
+        }
+
+        public ActionResult StoreMedicine(AddMedicineValidation obj)
+        {
+            if(ModelState.IsValid==false)
+            {
+                return View("~/Views/Custom/AddMedicine.cshtml", obj);
+            }
+            else
+            {
+                Medicine medicine = new Medicine();
+                medicine.MedicineName = obj.MedicineName;
+                medicine.MedicineType = obj.MedicineType;
+                medicine.Expiry = obj.Expiry;
+                medicine.Price = obj.Price;
+
+                string id = User.Identity.GetUserId();
+
+                medicine.UserId = id;
+
+                AppIdentityDbContext context = new AppIdentityDbContext();
+                var res = context.Medicines.SingleOrDefault(m => m.MedicineName ==obj.MedicineName);
+
+                if(res==null)
+                {
+                    context.Medicines.Add(medicine);
+                    context.SaveChanges();
+
+                    var data = context.Medicines.SingleOrDefault(m => m.MedicineName == obj.MedicineName);
+                    int medid = data.MedicineId;
+                    StoreManagement storeManagement = new StoreManagement();
+                    storeManagement.Stock = obj.Stock;
+                    storeManagement.MedicineId = medid;
+                    storeManagement.UserId = id;
+
+                    context.StoreManagements.Add(storeManagement);
+                    context.SaveChanges();
+                }
+                else
+                {
+                    int medid = res.MedicineId;
+                    var ans = context.StoreManagements.SingleOrDefault(s =>s.MedicineId==medid);
+
+                    context.Medicines.Remove(res);
+                    context.Medicines.Add(medicine);
+                    context.SaveChanges();
+
+                    var data = context.Medicines.SingleOrDefault(m => m.MedicineName == obj.MedicineName);
+                    int mid = data.MedicineId;
+                    StoreManagement storeManagement = new StoreManagement();
+                    storeManagement.Stock = obj.Stock;
+                    storeManagement.MedicineId = mid;
+                    storeManagement.UserId = id;
+
+                    context.StoreManagements.Add(storeManagement);
+                    context.SaveChanges();
+
+                }
+                return View("~/Views/Admin/Thanks.cshtml", obj);
+            }
+        }
+
+        public ActionResult DisplayMedicineList()
+        {
+            string id = User.Identity.GetUserId();
+            AppIdentityDbContext context = new AppIdentityDbContext();
+            var result = (from m in context.Medicines
+                          join s in context.StoreManagements
+                          on m.MedicineId equals s.MedicineId
+                          where m.UserId==id
+                          select new { m.MedicineName, m.MedicineType, m.Expiry, m.Price, s.Stock }
+                        ).ToList();
+
+            AppUser user = UserManager.FindById(id);
+            ViewBag.Name = user.UserName;
+
+            AddMedicineValidation dispobj = new AddMedicineValidation();
+            List<AddMedicineValidation> list = new List<AddMedicineValidation>();
+
+            foreach(var r in result)
+            {
+                dispobj.MedicineName = r.MedicineName;
+                dispobj.MedicineType = r.MedicineType;
+                dispobj.Expiry = r.Expiry;
+                dispobj.Price = r.Price;
+                dispobj.Stock = r.Stock;
+
+                list.Add(dispobj);
+            }
+            ViewBag.List = list;
+            return View(list);
+        }
     }
 }

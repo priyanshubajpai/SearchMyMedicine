@@ -226,6 +226,8 @@
     <Content Include="Views\FileManage\GetMyMessageAsUser.cshtml" />
     <Content Include="Views\Custom\StoreAddress.cshtml" />
     <Content Include="Views\Custom\DisplayContactDetail.cshtml" />
+    <Content Include="Views\Custom\AddMedicine.cshtml" />
+    <Content Include="Views\Custom\DisplayMedicineList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

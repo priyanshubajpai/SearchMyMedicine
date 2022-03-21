@@ -1,0 +1,43 @@
+﻿@using SecurityMine.Models
+@model AddMedicineValidation
+
+@{
+    ViewBag.Title = "AddMedicine";
+}
+
+<h2>AddMedicine</h2>
+
+@using (Html.BeginForm("StoreMedicine", "Custom", FormMethod.Post))
+{
+    @Html.LabelFor(m => m.MedicineName)
+    <br />
+    @Html.TextBoxFor(m => m.MedicineName)
+    @Html.ValidationMessageFor(m => m.MedicineName, "", new { @class = "text-danger" })
+    <br />
+
+    @Html.LabelFor(m => m.MedicineType)
+    <br />
+    @Html.TextBoxFor(m => m.MedicineType)
+    @Html.ValidationMessageFor(m => m.MedicineType, "", new { @class = "text-danger" })
+    <br />
+
+    @Html.LabelFor(m => m.Expiry)
+    <br />
+    @Html.EditorFor(m => m.Expiry)
+    @Html.ValidationMessageFor(m => m.Expiry, "", new { @class = "text-danger" })
+    <br />
+
+    @Html.LabelFor(m => m.Price)
+    <br />
+    @Html.TextBoxFor(m => m.Price)
+    @Html.ValidationMessageFor(m => m.Price, "", new { @class = "text-danger" })
+    <br />
+
+    @Html.LabelFor(m => m.Stock)
+    <br />
+    @Html.TextBoxFor(m => m.Stock)
+    @Html.ValidationMessageFor(m => m.Stock, "", new { @class = "text-danger" })
+    <br />
+    <input type="submit" value="Add" class="btn btn-info" />
+}
+
