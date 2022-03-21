@@ -13,7 +13,7 @@ namespace SecurityMine.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "202203180818299_init"; }
+            get { return "202203210902057_init"; }
         }
         
         string IMigrationMetadata.Source

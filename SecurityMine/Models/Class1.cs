@@ -7,6 +7,7 @@ using Owin;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -15,11 +16,14 @@ namespace SecurityMine.Models
     public class AppUser:IdentityUser
     {
         //Email,Phone,UserName
+        public virtual ICollection<Address> Addresses { get; set; }
+        public virtual ICollection<Medicine> Medicines { get; set; }
+        public virtual ICollection<StoreManagement> StoreManagements { get; set; }
     }
 
     public class AppIdentityDbContext:IdentityDbContext<AppUser>
     {
-        public AppIdentityDbContext():base("IdentityDb")
+        public AppIdentityDbContext():base("Db")
         {
 
         }
@@ -100,4 +104,59 @@ namespace SecurityMine.Models
         public string Password { get; set; }
         public bool RememberMe { get; set; }
     }
+    public class Address
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int AddressId { get; set; }
+        public string AddressLine { get; set; }
+        public string District { get; set; }
+        public string City { get; set; }
+        public string PinCode { get; set; }
+        public string State { get; set; }
+        public string Country { get; set; }
+        public string UserId { get; set; }
+
+        [ForeignKey("UserId")]
+        public virtual AppUser AppUser { get; set; }
+
+    }
+
+    public class Medicine
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int MedicineId { get; set; }
+        public string MedicineName { get; set; }
+        public string MedicineType { get; set; }
+        public DateTime Expiry { get; set; }
+        public float Price { get; set; }
+        public string UserId { get; set; }
+
+        [ForeignKey("UserId")]
+        public virtual AppUser AppUser { get; set; }
+        public ICollection<StoreManagement> StoreManagement { get; set; }
+
+    }
+
+    public class StoreManagement
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int StoreId { get; set; }
+        public int Stock { get; set; }
+        public int MedicineId { get; set; }
+        public string UserId { get; set; }
+
+        [ForeignKey("UserId")]
+        public virtual AppUser AppUser { get; set; }
+
+        [ForeignKey("MedicineId")]
+        public Medicine Medicine { get; set; }
+    }
+
+
+
+
+    
 }
