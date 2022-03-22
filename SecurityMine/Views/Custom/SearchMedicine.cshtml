@@ -1,0 +1,16 @@
+﻿
+@{
+    ViewBag.Title = "SearchMedicine";
+}
+
+<h2>SearchMedicine</h2>
+
+<table class="table table-striped">
+
+    @foreach (var text in ViewBag.Data)
+    {
+<tr>
+    <td>@text</td>
+</tr>
+    }
+</table>

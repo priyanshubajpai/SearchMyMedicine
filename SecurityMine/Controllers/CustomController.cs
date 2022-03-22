@@ -212,5 +212,36 @@ namespace SecurityMine.Controllers
             ViewBag.List = result;
             return View(list);
         }
+
+        public ActionResult SearchMedicine(SearchMedicineValidation obj)
+        {
+            if(ModelState.IsValid==false)
+            {
+                return View("~/Views/Home/Index.cshtml", obj);
+            }
+            else
+            {
+                String med = obj.SearchKeyword;
+                AppIdentityDbContext context = new AppIdentityDbContext();
+                var result = (from m in context.Medicines
+                              join s in context.StoreManagements
+                              on m.MedicineId equals s.MedicineId
+                              where m.MedicineName == med
+                              join a in context.Addresses
+                              on s.UserId equals a.UserId
+                              select new {m.MedicineType,m.Expiry,m.Price,s.Stock,a.AddressLine,a.District}
+                              );
+
+                if(result==null)
+                {
+                    return View("Error");
+                }
+                else
+                {
+                    ViewBag.Data = result;
+                    return View();
+                }
+            }
+        }
     }
 }

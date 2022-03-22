@@ -44,4 +44,10 @@ namespace SecurityMine.Models
         [Required]
         public int Stock { get; set; }
     }
+
+    public class SearchMedicineValidation
+    {
+        [Required(ErrorMessage ="Required!!")]
+        public string SearchKeyword { get; set; }
+    }
 }

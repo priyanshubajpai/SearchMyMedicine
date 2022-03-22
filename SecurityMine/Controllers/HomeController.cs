@@ -21,7 +21,8 @@ namespace SecurityMine.Controllers
         }
         public ActionResult Index()
         {
-            return View();
+            SearchMedicineValidation obj = new SearchMedicineValidation();
+            return View(obj);
         }
         
 
