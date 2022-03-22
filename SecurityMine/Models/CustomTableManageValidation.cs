@@ -62,4 +62,16 @@ namespace SecurityMine.Models
         public string Email { get; set; }
         public string Phone { get; set; }
     }
+
+    public class UpdateStockAndPriceValidation
+    {
+        [Required]
+        public string MedicineName { get; set; }
+
+        [Required]
+        public int Stock { get; set; }
+
+        [Required]
+        public float Price { get; set; }
+    }
 }

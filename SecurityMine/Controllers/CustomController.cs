@@ -328,5 +328,48 @@ namespace SecurityMine.Controllers
             return View(list);
         }
 
+        public ActionResult UpdateStockAndPrice(string MedicineName)
+        {
+            UpdateStockAndPriceValidation obj = new UpdateStockAndPriceValidation();
+            ViewBag.MedName = MedicineName;
+            return View(obj);
+        }
+
+        public ActionResult UpdateStockAndPriceAction(UpdateStockAndPriceValidation obj)
+        {
+            if(ModelState.IsValid==false)
+            {
+                return View("~/Views/Custom/UpdateStockAndPrice.cshtml", obj);
+            }
+            else
+            {
+                string id = User.Identity.GetUserId();
+
+                AppIdentityDbContext context = new AppIdentityDbContext();
+
+                string MedName = obj.MedicineName;
+                int new_stock = obj.Stock;
+                float new_price = obj.Price;
+
+                Medicine result = context.Medicines.Where(u => u.UserId == id).SingleOrDefault(m=>m.MedicineName==MedName);
+                result.Price = new_price;
+
+                int medid = result.MedicineId;
+                StoreManagement ans = context.StoreManagements.Where(u => u.UserId == id).SingleOrDefault(m => m.MedicineId == medid);
+                ans.Stock = new_stock;
+
+                context.Medicines.Add(result);
+                context.SaveChanges();
+                context.StoreManagements.Add(ans);
+                context.SaveChanges();
+
+                Medicine res = context.Medicines.SingleOrDefault(m => m.MedicineId == medid);
+                context.Medicines.Remove(res);
+                context.SaveChanges();
+
+                return View("~/Views/Admin/Thanks.cshtml");
+            }
+        }
+
     }
 }
