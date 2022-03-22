@@ -8,19 +8,21 @@
 <h2>DisplayMedicineList</h2>
 
 <table class="table table-striped">
-    @*<tr>
-            <td><strong>User Info</strong></td>
-            <td><strong>Roles</strong></td>
-        </tr>*@
-    @foreach (AddMedicineValidation obj in ViewBag.List)
+    <tr>
+        <td><strong>Medicine Name</strong></td>
+        <td><strong>Medicine Type</strong></td>
+        <td><strong>Expiry</strong></td>
+        <td><strong>Price</strong></td>
+        <td><strong>Stock</strong></td>
+    </tr>
+    @foreach (AddMedicineValidation data in Model)
     {
     <tr>
-        <td>@obj.MedicineName</td>
-        <td>@obj.MedicineType</td>
-        <td>@obj.Expiry</td>
-        <td>@obj.Price</td>
-        <td>@obj.Stock</td>
+        <td>@data.MedicineName</td>
+        <td>@data.MedicineType</td>
+        <td>@data.Expiry</td>
+        <td>@data.Price</td>
+        <td>@data.Stock</td>
     </tr>
-}
+    }
 </table>
-

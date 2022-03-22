@@ -118,18 +118,18 @@ namespace SecurityMine.Controllers
                 medicine.UserId = id;
 
                 AppIdentityDbContext context = new AppIdentityDbContext();
-                var user_present = context.Medicines.SingleOrDefault(u => u.UserId == id);
+                var user_present = context.Medicines.Where(u => u.UserId == id).FirstOrDefault();
 
                 if (user_present != null)
                 {
-                    var res = context.Medicines.SingleOrDefault(m => m.MedicineName == obj.MedicineName);
+                    var res = context.Medicines.Where(m => m.MedicineName == obj.MedicineName).SingleOrDefault(u => u.UserId == id);
 
                     if (res == null)
                     {
                         context.Medicines.Add(medicine);
                         context.SaveChanges();
 
-                        var data = context.Medicines.SingleOrDefault(m => m.MedicineName == obj.MedicineName);
+                        var data = context.Medicines.Where(m => m.MedicineName == obj.MedicineName).SingleOrDefault(u => u.UserId == id);
                         int medid = data.MedicineId;
                         StoreManagement storeManagement = new StoreManagement();
                         storeManagement.Stock = obj.Stock;
@@ -142,13 +142,13 @@ namespace SecurityMine.Controllers
                     else
                     {
                         int medid = res.MedicineId;
-                        var ans = context.StoreManagements.SingleOrDefault(s => s.MedicineId == medid);
+                        var ans = context.StoreManagements.Where(s => s.MedicineId == medid).SingleOrDefault(u => u.UserId == id);
 
                         context.Medicines.Remove(res);
                         context.Medicines.Add(medicine);
                         context.SaveChanges();
 
-                        var data = context.Medicines.SingleOrDefault(m => m.MedicineName == obj.MedicineName);
+                        var data = context.Medicines.Where(m => m.MedicineName == obj.MedicineName).SingleOrDefault(u => u.UserId == id);
                         int mid = data.MedicineId;
                         StoreManagement storeManagement = new StoreManagement();
                         storeManagement.Stock = obj.Stock;
@@ -166,7 +166,7 @@ namespace SecurityMine.Controllers
                     context.Medicines.Add(medicine);
                     context.SaveChanges();
 
-                    var data = context.Medicines.SingleOrDefault(m => m.MedicineName == obj.MedicineName);
+                    var data = context.Medicines.Where(m => m.MedicineName == obj.MedicineName).SingleOrDefault(u=>u.UserId==id);
                     int medid = data.MedicineId;
                     StoreManagement storeManagement = new StoreManagement();
                     storeManagement.Stock = obj.Stock;
@@ -195,11 +195,12 @@ namespace SecurityMine.Controllers
             AppUser user = UserManager.FindById(id);
             ViewBag.Name = user.UserName;
 
-            AddMedicineValidation dispobj = new AddMedicineValidation();
+            AddMedicineValidation dispobj;
             List<AddMedicineValidation> list = new List<AddMedicineValidation>();
 
-            foreach(var r in result)
+            foreach (var r in result)
             {
+                dispobj= new AddMedicineValidation();
                 dispobj.MedicineName = r.MedicineName;
                 dispobj.MedicineType = r.MedicineType;
                 dispobj.Expiry = r.Expiry;
@@ -208,7 +209,7 @@ namespace SecurityMine.Controllers
 
                 list.Add(dispobj);
             }
-            ViewBag.List = list;
+            ViewBag.List = result;
             return View(list);
         }
     }
