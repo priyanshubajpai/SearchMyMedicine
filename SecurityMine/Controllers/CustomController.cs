@@ -101,7 +101,7 @@ namespace SecurityMine.Controllers
 
         public ActionResult StoreMedicine(AddMedicineValidation obj)
         {
-            if(ModelState.IsValid==false)
+            if (ModelState.IsValid == false)
             {
                 return View("~/Views/Custom/AddMedicine.cshtml", obj);
             }
@@ -118,9 +118,50 @@ namespace SecurityMine.Controllers
                 medicine.UserId = id;
 
                 AppIdentityDbContext context = new AppIdentityDbContext();
-                var res = context.Medicines.SingleOrDefault(m => m.MedicineName ==obj.MedicineName);
+                var user_present = context.Medicines.SingleOrDefault(u => u.UserId == id);
 
-                if(res==null)
+                if (user_present != null)
+                {
+                    var res = context.Medicines.SingleOrDefault(m => m.MedicineName == obj.MedicineName);
+
+                    if (res == null)
+                    {
+                        context.Medicines.Add(medicine);
+                        context.SaveChanges();
+
+                        var data = context.Medicines.SingleOrDefault(m => m.MedicineName == obj.MedicineName);
+                        int medid = data.MedicineId;
+                        StoreManagement storeManagement = new StoreManagement();
+                        storeManagement.Stock = obj.Stock;
+                        storeManagement.MedicineId = medid;
+                        storeManagement.UserId = id;
+
+                        context.StoreManagements.Add(storeManagement);
+                        context.SaveChanges();
+                    }
+                    else
+                    {
+                        int medid = res.MedicineId;
+                        var ans = context.StoreManagements.SingleOrDefault(s => s.MedicineId == medid);
+
+                        context.Medicines.Remove(res);
+                        context.Medicines.Add(medicine);
+                        context.SaveChanges();
+
+                        var data = context.Medicines.SingleOrDefault(m => m.MedicineName == obj.MedicineName);
+                        int mid = data.MedicineId;
+                        StoreManagement storeManagement = new StoreManagement();
+                        storeManagement.Stock = obj.Stock;
+                        storeManagement.MedicineId = mid;
+                        storeManagement.UserId = id;
+
+                        context.StoreManagements.Add(storeManagement);
+                        context.SaveChanges();
+
+                    }
+                    return View("~/Views/Admin/Thanks.cshtml", obj);
+                }
+                else
                 {
                     context.Medicines.Add(medicine);
                     context.SaveChanges();
@@ -134,28 +175,9 @@ namespace SecurityMine.Controllers
 
                     context.StoreManagements.Add(storeManagement);
                     context.SaveChanges();
+
+                    return View("~/Views/Admin/Thanks.cshtml", obj);
                 }
-                else
-                {
-                    int medid = res.MedicineId;
-                    var ans = context.StoreManagements.SingleOrDefault(s =>s.MedicineId==medid);
-
-                    context.Medicines.Remove(res);
-                    context.Medicines.Add(medicine);
-                    context.SaveChanges();
-
-                    var data = context.Medicines.SingleOrDefault(m => m.MedicineName == obj.MedicineName);
-                    int mid = data.MedicineId;
-                    StoreManagement storeManagement = new StoreManagement();
-                    storeManagement.Stock = obj.Stock;
-                    storeManagement.MedicineId = mid;
-                    storeManagement.UserId = id;
-
-                    context.StoreManagements.Add(storeManagement);
-                    context.SaveChanges();
-
-                }
-                return View("~/Views/Admin/Thanks.cshtml", obj);
             }
         }
 
