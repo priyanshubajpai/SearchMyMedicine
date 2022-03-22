@@ -1,16 +1,48 @@
-﻿
+﻿@using SecurityMine.Models
+@model List<DisplaySearch>
+
 @{
     ViewBag.Title = "SearchMedicine";
 }
 
-<h2>SearchMedicine</h2>
+@if (ViewBag.NoMedicine != null)
+{
+    <script>
+        alert("No Store exists with Entered Medicine Stocks!")
+        /*window.location = "http:/localhost:61345/Home/Index";*/
+        document.location.replace('../Home/Index');
+    </script>
+}
+else
+{
+<center>
+    <h2><strong>Search Result for @ViewBag.MedicineName</strong></h2>
+</center>
 
 <table class="table table-striped">
 
-    @foreach (var text in ViewBag.Data)
+    @foreach (DisplaySearch search in Model)
     {
-<tr>
-    <td>@text</td>
-</tr>
+    <tr>
+        <td><strong>Store Name</strong></td>
+        <td><strong>Email</strong></td>
+        <td><strong>Phone</strong></td>
+        <td><strong>Medicine Type</strong></td>
+        <td><strong>Expiry</strong></td>
+        <td><strong>Price</strong></td>
+        <td><strong>Stock</strong></td>
+        <td><strong>Address</strong></td>
+    </tr>
+        <tr>
+            <td>@search.StoreName</td>
+            <td>@search.Email</td>
+            <td>@search.Phone</td>
+            <td>@search.MedicineType</td>
+            <td>@search.Expiry</td>
+            <td>@search.Price</td>
+            <td>@search.Stock</td>
+            <td>@search.Address</td>
+        </tr>
     }
 </table>
+}

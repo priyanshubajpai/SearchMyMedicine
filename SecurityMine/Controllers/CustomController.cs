@@ -189,7 +189,7 @@ namespace SecurityMine.Controllers
                           join s in context.StoreManagements
                           on m.MedicineId equals s.MedicineId
                           where m.UserId==id
-                          select new { m.MedicineName, m.MedicineType, m.Expiry, m.Price, s.Stock }
+                          select new { m.MedicineName, m.MedicineType, m.Expiry, m.Price, s.Stock,s.UserId }
                         ).ToList();
 
             AppUser user = UserManager.FindById(id);
@@ -222,6 +222,7 @@ namespace SecurityMine.Controllers
             else
             {
                 String med = obj.SearchKeyword;
+                ViewBag.MedicineName = med;
                 AppIdentityDbContext context = new AppIdentityDbContext();
                 var result = (from m in context.Medicines
                               join s in context.StoreManagements
@@ -229,8 +230,11 @@ namespace SecurityMine.Controllers
                               where m.MedicineName == med
                               join a in context.Addresses
                               on s.UserId equals a.UserId
-                              select new { m.MedicineType, m.Expiry, m.Price, s.Stock, a.AddressLine, a.District }
+                              select new { m.MedicineType, m.Expiry, m.Price, s.Stock, a.AddressLine, a.District,
+                              a.City,a.PinCode,a.State,a.Country,a.UserId}
                               );
+
+
 
                 if (result==null)
                 {
@@ -238,10 +242,54 @@ namespace SecurityMine.Controllers
                 }
                 else
                 {
-                    ViewBag.Data = result;
-                    return View();
+                    DisplaySearch display;
+                    List<DisplaySearch> list = new List<DisplaySearch>();
+
+                    foreach (var r in result)
+                    {
+                        display=new DisplaySearch();
+                        string id = r.UserId;
+                        AppUser user = UserManager.FindById(id);
+                        display.StoreName = user.UserName;
+                        display.Email = user.Email;
+                        display.Phone = user.PhoneNumber;
+                        display.MedicineType = r.MedicineType;
+                        display.Expiry = r.Expiry;
+                        display.Price = r.Price;
+                        display.Stock = r.Stock;
+                        display.Address = r.AddressLine + " " + r.District+" "+r.City+" "+r.PinCode+" "+r.State+" "+r.Country;
+
+                        list.Add(display);
+                    }
+
+                        if(list.Count==0)
+                        {
+                        ViewBag.NoMedicine = "yes";
+                        }
+                        return View(list);
                 }
+
+
             }
+        }
+
+        public ActionResult DeleteMedicine(string MedicineName)
+        {
+            AppIdentityDbContext context = new AppIdentityDbContext();
+            string id = User.Identity.GetUserId();
+
+            var res = context.Medicines.Where(u => u.UserId == id).SingleOrDefault(m => m.MedicineName == MedicineName);
+            int medid = res.MedicineId;
+
+            //var ans = context.StoreManagements.Where(u => u.UserId == id).SingleOrDefault(m => m.MedicineId == medid);
+
+            context.Medicines.Remove(res);
+            context.SaveChanges();
+
+            //context.StoreManagements.Remove(ans);
+            //context.SaveChanges();
+
+            return View("~/Views/Admin/Thanks.cshtml");
         }
     }
 }

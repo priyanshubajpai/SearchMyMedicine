@@ -5,7 +5,9 @@
     ViewBag.Title = "DisplayMedicineList";
 }
 
-<h2>DisplayMedicineList</h2>
+<center>
+    <h2><strong>Registered Medicines</strong></h2>
+</center>
 
 <table class="table table-striped">
     <tr>
@@ -17,12 +19,16 @@
     </tr>
     @foreach (AddMedicineValidation data in Model)
     {
-    <tr>
-        <td>@data.MedicineName</td>
-        <td>@data.MedicineType</td>
-        <td>@data.Expiry</td>
-        <td>@data.Price</td>
-        <td>@data.Stock</td>
-    </tr>
+<tr>
+    <td>@data.MedicineName</td>
+    <td>@data.MedicineType</td>
+    <td>@data.Expiry</td>
+    <td>@data.Price</td>
+    <td>@data.Stock</td>
+
+    <td>
+        @Html.ActionLink("Delete", "DeleteMedicine", "Custom", new { MedicineName= data.MedicineName}, new { @class = "btn btn-danger" })
+    </td>
+</tr>
     }
 </table>
