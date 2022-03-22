@@ -5,6 +5,16 @@
     ViewBag.Title = "DisplayMedicineList";
 }
 
+@if (ViewBag.NoMedicine != null)
+{
+    <script>
+        alert("No Medicines Registered Yet!!")
+        /*window.location = "http:/localhost:61345/Home/Index";*/
+        document.location.replace('../Home/MasterAdminLogin');
+    </script>
+}
+else
+{
 <center>
     <h2><strong>Registered Medicines</strong></h2>
 </center>
@@ -32,3 +42,4 @@
         </tr>
     }
 </table>
+}

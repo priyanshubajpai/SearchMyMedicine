@@ -209,7 +209,11 @@ namespace SecurityMine.Controllers
 
                 list.Add(dispobj);
             }
-            ViewBag.List = result;
+            //ViewBag.List = result;
+            if(list.Count==0)
+            {
+                ViewBag.NoMedicine = "yes";
+            }
             return View(list);
         }
 

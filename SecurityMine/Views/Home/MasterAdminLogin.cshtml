@@ -154,61 +154,67 @@
             <input type="submit" value="Change Password" class="btn btn-info" />
         }*@
 
-    <center>
 
-        <div class="btn-group-justified">
-            <div class="btn-group">
-                @Html.ActionLink(" Update Password", "ChangePasswd", "Admin", null, new { @class = "glyphicon glyphicon-edit btn btn-info my-btn" })
-            </div>
-            <div class="btn-group">
-                @Html.ActionLink(" Add/Update Address", "StoreAddress", "Custom", new { ViewBag.UserId }, new { @class = "glyphicon glyphicon-edit btn btn-info my-btn" })
-            </div>
-            <div class="btn-group">
-                @Html.ActionLink(" Add New Medicine", "AddMedicine", "Custom", new { ViewBag.UserId }, new { @class = "glyphicon glyphicon-edit btn btn-info my-btn" })
-            </div>
-            <div class="btn-group">
-                @Html.ActionLink(" Display Medicine List", "DisplayMedicineList", "Custom", new { ViewBag.UserId }, new { @class = "glyphicon glyphicon-edit btn btn-info my-btn" })
-            </div>
+
+    <div class="btn-group-justified">
+        <div class="btn-group">
+            @Html.ActionLink(" Update Password", "ChangePasswd", "Admin", null, new { @class = "glyphicon glyphicon-edit btn btn-info my-btn" })
         </div>
+        <div class="btn-group">
+            @Html.ActionLink(" Add/Update Address", "StoreAddress", "Custom", new { ViewBag.UserId }, new { @class = "glyphicon glyphicon-edit btn btn-info my-btn" })
+        </div>
+        <div class="btn-group">
+            @Html.ActionLink(" Add New Medicine", "AddMedicine", "Custom", new { ViewBag.UserId }, new { @class = "glyphicon glyphicon-edit btn btn-info my-btn" })
+        </div>
+        <div class="btn-group">
+            @Html.ActionLink(" Display Medicine List", "DisplayMedicineList", "Custom", new { ViewBag.UserId }, new { @class = "glyphicon glyphicon-edit btn btn-info my-btn" })
+        </div>
+    </div>
 
 
 
-        <br />
-        <br />
+    <br />
+    <br />
+    <center>
         @using (Html.BeginForm("SendMessageToAdmin", "FileManage", FormMethod.Post))
         {
-            @*@Html.LabelFor(u => u.UserName)
-                <br />*@
-            @Html.TextBoxFor(u => u.UserName, new { @Value = User.Identity.Name, @readonly = true })
-            @Html.ValidationMessageFor(u => u.UserName, "", new { @class = "text-danger" })
-            <br />
-            <br />
-            @*<input type="submit" value="Send Message To Admin" class="btn btn-warning" />*@
-            <button class="glyphicon glyphicon-folder-open btn btn-success float-right" type="submit"> Message Admin</button>
+        @*@Html.LabelFor(u => u.UserName)
+        <br />*@
+        @Html.TextBoxFor(u => u.UserName, new { @Value = User.Identity.Name, @readonly = true })
+        @Html.ValidationMessageFor(u => u.UserName, "", new { @class = "text-danger" })
+        <br />
+        <br />
+        @*<input type="submit" value="Send Message To Admin" class="btn btn-warning" />*@
+        @*<button class="glyphicon glyphicon-folder-open btn btn-success" type="submit"> Message Admin</button>*@
+        <button class="glyphicon glyphicon-folder-open btn btn-success float-right" type="submit"> Message Admin</button>
         }
+    </center>
+
+    <center>
         <br />
         @if (ViewBag.NoSuchUserPresent == null)
         {
-            using (Html.BeginForm("GetMyMessageAsUser", "FileManage", FormMethod.Post))
-            {
-                @*@Html.LabelFor(u => u.UserName)
-                    <br />*@
-                @Html.TextBoxFor(u => u.UserName, new { @Value = User.Identity.Name, @readonly = true })
-                @Html.ValidationMessageFor(u => u.UserName, "", new { @class = "text-danger" })
-                <br />
-                <br />
-                @*<input type="submit" value="My Messages" class="btn btn-warning" />*@
-                <button class="glyphicon glyphicon-folder-open btn btn-success float-right" type="submit"> View Messages</button>
-            }
+        using (Html.BeginForm("GetMyMessageAsUser", "FileManage", FormMethod.Post))
+        {
+        @*@Html.LabelFor(u => u.UserName)
+        <br />*@
+        @Html.TextBoxFor(u => u.UserName, new { @Value = User.Identity.Name, @readonly = true })
+        @Html.ValidationMessageFor(u => u.UserName, "", new { @class = "text-danger" })
+        <br />
+        <br />
+        @*<input type="submit" value="My Messages" class="btn btn-warning" />*@
+        <button class="glyphicon glyphicon-folder-open btn btn-success float-right" type="submit"> View Messages</button>
         }
-        <br />
-        @*@Html.ActionLink(" Add/Update Address", "StoreAddress", "Custom", new { ViewBag.UserId }, new { @class = "glyphicon glyphicon-edit btn btn-info my-btn" })*@
-        <br />
-        <br />
-        @*@Html.ActionLink(" Add New Medicine", "AddMedicine", "Custom", new { ViewBag.UserId }, new { @class = "glyphicon glyphicon-edit btn btn-info my-btn" })*@
-        <br />
-        <br />
-        @*@Html.ActionLink(" Display Medicine List", "DisplayMedicineList", "Custom", new { ViewBag.UserId }, new { @class = "glyphicon glyphicon-edit btn btn-info my-btn" })*@
+        }
     </center>
+    <br />
+    @*@Html.ActionLink(" Add/Update Address", "StoreAddress", "Custom", new { ViewBag.UserId }, new { @class = "glyphicon glyphicon-edit btn btn-info my-btn" })*@
+    <br />
+    <br />
+    @*@Html.ActionLink(" Add New Medicine", "AddMedicine", "Custom", new { ViewBag.UserId }, new { @class = "glyphicon glyphicon-edit btn btn-info my-btn" })*@
+    <br />
+    <br />
+    @*@Html.ActionLink(" Display Medicine List", "DisplayMedicineList", "Custom", new { ViewBag.UserId }, new { @class = "glyphicon glyphicon-edit btn btn-info my-btn" })*@
+
 
 }
