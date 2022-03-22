@@ -137,6 +137,10 @@
         .heading {
             font-family: cursive;
         }
+        .btn-group {
+            padding-left: 2px;
+            padding-right: 2px; /*//to add space in btn justified*/
+        }
     </style>
 
     ViewBag.Title = "Medical Store Login";
@@ -151,7 +155,24 @@
         }*@
 
     <center>
-        @Html.ActionLink(" Update Password", "ChangePasswd", "Admin", null, new { @class = "glyphicon glyphicon-edit btn btn-info my-btn" })
+
+        <div class="btn-group-justified">
+            <div class="btn-group">
+                @Html.ActionLink(" Update Password", "ChangePasswd", "Admin", null, new { @class = "glyphicon glyphicon-edit btn btn-info my-btn" })
+            </div>
+            <div class="btn-group">
+                @Html.ActionLink(" Add/Update Address", "StoreAddress", "Custom", new { ViewBag.UserId }, new { @class = "glyphicon glyphicon-edit btn btn-info my-btn" })
+            </div>
+            <div class="btn-group">
+                @Html.ActionLink(" Add New Medicine", "AddMedicine", "Custom", new { ViewBag.UserId }, new { @class = "glyphicon glyphicon-edit btn btn-info my-btn" })
+            </div>
+            <div class="btn-group">
+                @Html.ActionLink(" Display Medicine List", "DisplayMedicineList", "Custom", new { ViewBag.UserId }, new { @class = "glyphicon glyphicon-edit btn btn-info my-btn" })
+            </div>
+        </div>
+
+
+
         <br />
         <br />
         @using (Html.BeginForm("SendMessageToAdmin", "FileManage", FormMethod.Post))
@@ -181,13 +202,13 @@
             }
         }
         <br />
-        @Html.ActionLink("Update Address", "StoreAddress", "Custom", new {ViewBag.UserId}, new {@class="btn btn-info"})
+        @*@Html.ActionLink(" Add/Update Address", "StoreAddress", "Custom", new { ViewBag.UserId }, new { @class = "glyphicon glyphicon-edit btn btn-info my-btn" })*@
         <br />
         <br />
-        @Html.ActionLink("Add New Medicine", "AddMedicine", "Custom", new {ViewBag.UserId},new {@class="btn btn-info"})
+        @*@Html.ActionLink(" Add New Medicine", "AddMedicine", "Custom", new { ViewBag.UserId }, new { @class = "glyphicon glyphicon-edit btn btn-info my-btn" })*@
         <br />
         <br />
-        @Html.ActionLink("Display Medicine List","DisplayMedicineList","Custom",new {ViewBag.UserId}, new { @class = "btn btn-info" })
+        @*@Html.ActionLink(" Display Medicine List", "DisplayMedicineList", "Custom", new { ViewBag.UserId }, new { @class = "glyphicon glyphicon-edit btn btn-info my-btn" })*@
     </center>
 
 }
