@@ -188,6 +188,11 @@ namespace SecurityMine.Controllers
                         user = UserManager.FindByName(user1.UserName);
                         UserManager.AddToRole(user.Id, "MedicalStore");
 
+                        AppIdentityDbContext context = new AppIdentityDbContext();
+                        Address address = new Address() {AddressLine="AddLine",District="Dist",City="City",PinCode="PinCode",State="State",Country="India",UserId=user.Id};
+                        context.Addresses.Add(address);
+                        context.SaveChanges();
+
                         return View("Thanks");
                     }
                     else
