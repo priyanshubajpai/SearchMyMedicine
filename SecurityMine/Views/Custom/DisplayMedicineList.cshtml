@@ -39,6 +39,9 @@ else
             <td>
                 @Html.ActionLink("Delete", "DeleteMedicine", "Custom", new { MedicineName = data.MedicineName }, new { @class = "btn btn-danger" })
             </td>
+            <td>
+                @Html.ActionLink("Update Price & Stock", "UpdateStockAndPrice", "Custom", new {MedicineName=data.MedicineName},new { @class="btn btn-info"})
+            </td>
         </tr>
     }
 </table>

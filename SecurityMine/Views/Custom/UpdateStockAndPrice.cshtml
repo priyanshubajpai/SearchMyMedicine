@@ -1,0 +1,32 @@
+﻿@using SecurityMine.Models
+@model UpdateStockAndPriceValidation
+
+@{
+    ViewBag.Title = "UpdateStockAndPrice";
+}
+
+<center>
+    <h2><strong>Update Stock And Price</strong></h2>
+
+    @using (Html.BeginForm("UpdateStockAndPriceAction", "Custom", FormMethod.Post, new { @class = "form-horizontal" }))
+    {
+        @Html.LabelFor(u => u.MedicineName, new { @class = "control-label" })
+        <br />
+        @Html.TextBoxFor(u => u.MedicineName, new { @class = "form-control", @value = ViewBag.MedName, @readonly = true })
+        @Html.ValidationMessageFor(u => u.MedicineName, "", new { @class = "text-danger" })
+        <br />
+        @Html.LabelFor(u => u.Stock, new { @class = "control-label" })
+        <br />
+        @Html.TextBoxFor(u => u.Stock, new { @class = "form-control", type = "number" })
+        @Html.ValidationMessageFor(u => u.Stock, "", new { @class = "text-danger" })
+        <br />
+        @Html.LabelFor(u => u.Price, new { @class = "control-label" })
+        <br />
+        @Html.TextBoxFor(u => u.Price, new { @class = "form-control", type = "number", step = "any" })
+        @Html.ValidationMessageFor(u => u.Price, "", new { @class = "text-danger" })
+        <br />
+        <input type="submit" value="Update Records" class="btn btn-info" />
+
+    }
+</center>
+
