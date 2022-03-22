@@ -229,10 +229,10 @@ namespace SecurityMine.Controllers
                               where m.MedicineName == med
                               join a in context.Addresses
                               on s.UserId equals a.UserId
-                              select new {m.MedicineType,m.Expiry,m.Price,s.Stock,a.AddressLine,a.District}
+                              select new { m.MedicineType, m.Expiry, m.Price, s.Stock, a.AddressLine, a.District }
                               );
 
-                if(result==null)
+                if (result==null)
                 {
                     return View("Error");
                 }
