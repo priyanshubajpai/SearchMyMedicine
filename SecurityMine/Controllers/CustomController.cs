@@ -291,5 +291,38 @@ namespace SecurityMine.Controllers
 
             return View("~/Views/Admin/Thanks.cshtml");
         }
+
+        public ActionResult DisplayMedicineListToAdmin(string id)
+        {
+            //string id = User.Identity.GetUserId();
+            AppIdentityDbContext context = new AppIdentityDbContext();
+            var result = (from m in context.Medicines
+                          join s in context.StoreManagements
+                          on m.MedicineId equals s.MedicineId
+                          where m.UserId == id
+                          select new { m.MedicineName, m.MedicineType, m.Expiry, m.Price, s.Stock, s.UserId }
+                        ).ToList();
+
+            AppUser user = UserManager.FindById(id);
+            ViewBag.Name = user.UserName;
+
+            AddMedicineValidation dispobj;
+            List<AddMedicineValidation> list = new List<AddMedicineValidation>();
+
+            foreach (var r in result)
+            {
+                dispobj = new AddMedicineValidation();
+                dispobj.MedicineName = r.MedicineName;
+                dispobj.MedicineType = r.MedicineType;
+                dispobj.Expiry = r.Expiry;
+                dispobj.Price = r.Price;
+                dispobj.Stock = r.Stock;
+
+                list.Add(dispobj);
+            }
+            ViewBag.List = result;
+            return View(list);
+        }
+
     }
 }

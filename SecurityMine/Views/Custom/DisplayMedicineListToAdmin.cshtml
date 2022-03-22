@@ -2,8 +2,10 @@
 @model List<AddMedicineValidation>
 
 @{
-    ViewBag.Title = "DisplayMedicineList";
+    ViewBag.Title = "DisplayMedicineListToAdmin";
 }
+
+
 
 <center>
     <h2><strong>Registered Medicines</strong></h2>
@@ -25,10 +27,6 @@
             <td>@data.Expiry</td>
             <td>@data.Price</td>
             <td>@data.Stock</td>
-
-            <td>
-                @Html.ActionLink("Delete", "DeleteMedicine", "Custom", new { MedicineName = data.MedicineName }, new { @class = "btn btn-danger" })
-            </td>
         </tr>
     }
 </table>

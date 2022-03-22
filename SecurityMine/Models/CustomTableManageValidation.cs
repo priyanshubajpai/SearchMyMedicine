@@ -36,6 +36,7 @@ namespace SecurityMine.Models
         public string MedicineType { get; set; }
 
         [Required]
+        [DataType(DataType.Date)]
         public DateTime Expiry { get; set; }
 
         [Required]

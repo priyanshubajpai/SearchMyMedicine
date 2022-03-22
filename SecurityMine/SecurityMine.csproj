@@ -229,6 +229,7 @@
     <Content Include="Views\Custom\AddMedicine.cshtml" />
     <Content Include="Views\Custom\DisplayMedicineList.cshtml" />
     <Content Include="Views\Custom\SearchMedicine.cshtml" />
+    <Content Include="Views\Custom\DisplayMedicineListToAdmin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

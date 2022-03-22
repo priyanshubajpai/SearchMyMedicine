@@ -37,6 +37,9 @@
     <td>
         @Html.ActionLink("Contact Details", "DisplayContactDetail", "Custom", new { u.Id }, new { @class = "btn btn-warning" })
     </td>
+    <td>
+        @Html.ActionLink("Display Medicine List", "DisplayMedicineListToAdmin", "Custom", new { id=u.Id }, new { @class = "btn btn-info" })
+    </td>
 </tr>
         }
 

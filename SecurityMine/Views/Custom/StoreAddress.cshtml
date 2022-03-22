@@ -5,48 +5,50 @@
     ViewBag.Title = "StoreAddress";
 }
 
-<h2>StoreAddress</h2>
+<center>
+    <h2><strong>Store/Update Address</strong></h2>
 
-@using (Html.BeginForm("AddAddress", "Custom", FormMethod.Post))
-{
-    @Html.LabelFor(a => a.AddressLine)
-    <br />
-    @Html.TextAreaFor(a => a.AddressLine)
-    @Html.ValidationMessageFor(a => a.AddressLine,"",new {@class="text-danger"})
-    <br />
+    @using (Html.BeginForm("AddAddress", "Custom", FormMethod.Post, new { @class = "form-horizontal" }))
+    {
+        @Html.LabelFor(a => a.AddressLine, new { @class = "control-label" })
+        <br />
+        @Html.TextAreaFor(a => a.AddressLine, new { @class = "form-control" })
+        @Html.ValidationMessageFor(a => a.AddressLine, "", new { @class = "text-danger" })
+        <br />
 
 
-    @Html.LabelFor(a => a.District)
-    <br />
-    @Html.TextBoxFor(a => a.District)
-    @Html.ValidationMessageFor(a => a.District, "", new { @class = "text-danger" })
-    <br />
+        @Html.LabelFor(a => a.District, new { @class = "control-label" })
+        <br />
+        @Html.TextBoxFor(a => a.District, new { @class = "form-control" })
+        @Html.ValidationMessageFor(a => a.District, "", new { @class = "text-danger" })
+        <br />
 
-    @Html.LabelFor(a => a.City)
-    <br />
-    @Html.TextBoxFor(a => a.City)
-    @Html.ValidationMessageFor(a => a.City, "", new { @class = "text-danger" })
-    <br />
+        @Html.LabelFor(a => a.City, new { @class = "control-label" })
+        <br />
+        @Html.TextBoxFor(a => a.City, new { @class = "form-control" })
+        @Html.ValidationMessageFor(a => a.City, "", new { @class = "text-danger" })
+        <br />
 
-    @Html.LabelFor(a => a.PinCode)
-    <br />
-    @Html.TextBoxFor(a => a.PinCode)
-    @Html.ValidationMessageFor(a => a.PinCode, "", new { @class = "text-danger" })
-    <br />
+        @Html.LabelFor(a => a.PinCode, new { @class = "control-label" })
+        <br />
+        @Html.TextBoxFor(a => a.PinCode, new { @class = "form-control" })
+        @Html.ValidationMessageFor(a => a.PinCode, "", new { @class = "text-danger" })
+        <br />
 
-    @Html.LabelFor(a => a.State)
-    <br />
-    @Html.TextBoxFor(a => a.State)
-    @Html.ValidationMessageFor(a => a.State, "", new { @class = "text-danger" })
-    <br />
+        @Html.LabelFor(a => a.State, new { @class = "control-label" })
+        <br />
+        @Html.TextBoxFor(a => a.State, new { @class = "form-control" })
+        @Html.ValidationMessageFor(a => a.State, "", new { @class = "text-danger" })
+        <br />
 
-    @Html.LabelFor(a => a.Country)
-    <br />
-    @Html.TextBoxFor(a => a.Country)
-    @Html.ValidationMessageFor(a => a.Country, "", new { @class = "text-danger" })
-    <br />
+        @Html.LabelFor(a => a.Country, new { @class = "control-label" })
+        <br />
+        @Html.TextBoxFor(a => a.Country, new { @class = "form-control" })
+        @Html.ValidationMessageFor(a => a.Country, "", new { @class = "text-danger" })
+        <br />
 
-    <input type="submit" value="Update Info" class="btn btn-info" />
+        <input type="submit" value="Update Info" class="btn btn-info" />
 
-}
+    }
+</center>
 
