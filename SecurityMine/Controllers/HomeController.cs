@@ -40,9 +40,8 @@ namespace SecurityMine.Controllers
         
         public ActionResult Contact()
         {
-            ViewBag.Message = "Contact page.";
-
-            return View();
+            FeedBackValidation obj = new FeedBackValidation();
+            return View(obj);
         }
 
         
@@ -64,7 +63,7 @@ namespace SecurityMine.Controllers
             FileManagement obj = new FileManagement();
             String prevlength = obj.ReadLastLineInAdminMessageSizeFile();
            
-            string path = @"C:\Users\850058620\Desktop\BookMyMedicine\BookMyMedicine\MessageExchange\Admin.txt";
+            string path = @"C:\Users\Hp\Desktop\BookMyMedicine\MessageExchange\Admin.txt";
             long length = new System.IO.FileInfo(path).Length;
             obj.WriteFileSize(length);
 

@@ -112,6 +112,28 @@ namespace SecurityMine.Controllers
                 return View();
             }
         }
+
+        public ActionResult WriteFeedBack(FeedBackValidation obj)
+        {
+            if(ModelState.IsValid==false)
+            {
+                return View("~/Views/Home/Contact.cshtml",obj);
+            }
+            else
+            {
+                FileManagement fileobj = new FileManagement();
+                fileobj.WriteFeedBackToFile(obj);
+                return View("~/Views/Admin/Thanks.cshtml");
+            }
+        }
+
+        public ActionResult ReadFeedBack()
+        {
+            FileManagement obj = new FileManagement();
+            List<string> list = obj.ReadFeedBackFromFile();
+            ViewBag.Data = list;
+            return View();
+        }
     }
 
     

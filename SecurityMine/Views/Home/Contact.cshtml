@@ -1,20 +1,40 @@
-﻿@{
-    ViewBag.Title = "Contact";
+﻿@using SecurityMine.Models
+@model FeedBackValidation
+
+@{ ViewBag.Title = "Contact"; }
+
+
+<center>
+<h2><strong>FeedBack Form</strong></h2>
+    <br />
+@using (Html.BeginForm("WriteFeedBack", "FileManage", FormMethod.Post,new { @class="form-horizontal"}))
+{
+    @Html.LabelFor(f => f.Name, new { @class = "control-label" })
+    <br />
+    @Html.TextBoxFor(f => f.Name, new { @class = "form-control" })
+    @Html.ValidationMessageFor(f => f.Name, "", new { @class = "text-danger" })
+    <br />
+
+    @Html.LabelFor(f => f.Email, new { @class = "control-label" })
+    <br />
+    @Html.TextBoxFor(f => f.Email, new { @class = "form-control" })
+    @Html.ValidationMessageFor(f => f.Email, "", new { @class = "text-danger" })
+    <br />
+
+     @Html.LabelFor(f=>f.FeedBack, new { @class = "control-label" })
+    <br />
+    @Html.TextAreaFor(f=>f.FeedBack, new { @class = "form-control" })
+    @Html.ValidationMessageFor(f => f.FeedBack, "", new {@class="text-danger"})
+    <br />
+    <input type="submit" value="Submit FeedBack" class="btn btn-info" />
 }
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
+    </center>
 
 
-<p>
-    <h4>Priyanshu Bajpai</h4>
-    <br />
-    <h4>Sunil</h4>
-    <br />
-    <h4>Santosi</h4>
-    <br />
-    <h4>Shubham</h4>
-</p>
 
-<address>
-    NIT Allahabad,Prayagraj,211004
-</address>
+@section scripts
+{
+
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+}

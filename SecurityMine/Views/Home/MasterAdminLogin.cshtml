@@ -62,7 +62,7 @@
     <br />
     <div class="btn-group-justified">
         <div class="btn-group">
-            @Html.ActionLink(" Register New Medical Store", "MasterAdmin", "Home", null, new { @class = "glyphicon glyphicon-plus btn btn-info my-btn" })
+            @Html.ActionLink(" Register New Store", "MasterAdmin", "Home", null, new { @class = "glyphicon glyphicon-plus btn btn-info my-btn" })
         </div>
         <div class="btn-group">
             @Html.ActionLink(" Update Password", "ChangePasswd", "Admin", null, new { @class = "glyphicon glyphicon-edit btn btn-info my-btn" })
@@ -72,6 +72,9 @@
         </div>
         <div class="btn-group">
             @Html.ActionLink(" List Deregistered Users", "GetDeletedUsers", "FileManage", null, new { @class = "glyphicon glyphicon-trash btn btn-info my-btn" })
+        </div>
+        <div class="btn-group">
+            @Html.ActionLink(" Get FeedBack", "ReadFeedBack","FileManage",null, new { @class = "glyphicon glyphicon-file btn btn-info my-btn" })
         </div>
     </div>
 

@@ -73,4 +73,17 @@ namespace SecurityMine.Models
         [Required(ErrorMessage = "This Field is required")]
         public string UserName { get; set; }
     }
+
+    public class FeedBackValidation
+    {
+        [Required]
+        public string Name { get; set; }
+
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; }
+
+        [Required]
+        public string FeedBack { get; set; }
+    }
 }

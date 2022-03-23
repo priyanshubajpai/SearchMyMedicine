@@ -273,6 +273,16 @@ namespace SecurityMine.Controllers
             FileManagement fileobj = new FileManagement();
             AppUser user = UserManager.FindById(id);
             fileobj.WriteDeletedUser(user);
+
+            ////////////////////////////////////////////////
+            ///
+
+            AppIdentityDbContext context = new AppIdentityDbContext();
+            var res = context.Addresses.SingleOrDefault(u => u.UserId == user.Id);
+            context.Addresses.Remove(res);
+            context.SaveChanges();
+
+            /////////////
             IdentityResult result = UserManager.Delete(user);
 
             if (result.Succeeded)

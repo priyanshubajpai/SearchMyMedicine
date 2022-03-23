@@ -161,9 +161,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202203210902057_init.cs" />
-    <Compile Include="Migrations\202203210902057_init.Designer.cs">
-      <DependentUpon>202203210902057_init.cs</DependentUpon>
+    <Compile Include="Migrations\202203230705093_init.cs" />
+    <Compile Include="Migrations\202203230705093_init.Designer.cs">
+      <DependentUpon>202203230705093_init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Class1.cs" />
@@ -232,6 +232,7 @@
     <Content Include="Views\Custom\SearchMedicine.cshtml" />
     <Content Include="Views\Custom\DisplayMedicineListToAdmin.cshtml" />
     <Content Include="Views\Custom\UpdateStockAndPrice.cshtml" />
+    <Content Include="Views\FileManage\ReadFeedBack.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -247,11 +248,10 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202203210902057_init.resx">
-      <DependentUpon>202203210902057_init.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202203230705093_init.resx">
+      <DependentUpon>202203230705093_init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

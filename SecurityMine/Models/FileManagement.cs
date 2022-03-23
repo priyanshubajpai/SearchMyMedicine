@@ -10,7 +10,7 @@ namespace SecurityMine.Models
     {
         public void WriteDeletedUser(AppUser user)
         {
-            FileStream fs = new FileStream(@"C:\Users\850058620\Desktop\BookMyMedicine\BookMyMedicine\DeletedUsers.txt", FileMode.Append, FileAccess.Write);
+            FileStream fs = new FileStream(@"C:\Users\Hp\Desktop\BookMyMedicine\DeletedUsers.txt", FileMode.Append, FileAccess.Write);
             StreamWriter writer = new StreamWriter(fs);
 
             string time = DateTime.Now.ToString("hh:mm:ss"); // includes leading zeros
@@ -29,7 +29,7 @@ namespace SecurityMine.Models
         public List<string> ReadDeletedUsers()
         {
             List<string> list = new List<string>();
-            FileStream fs = new FileStream(@"C:\Users\850058620\Desktop\BookMyMedicine\BookMyMedicine\DeletedUsers.txt", FileMode.Open, FileAccess.Read);
+            FileStream fs = new FileStream(@"C:\Users\Hp\Desktop\BookMyMedicine\DeletedUsers.txt", FileMode.Open, FileAccess.Read);
 
             StreamReader reader = new StreamReader(fs);
 
@@ -53,7 +53,7 @@ namespace SecurityMine.Models
 
         public void WriteMessages(SendMessageValidation obj)
         {
-            FileStream fs = new FileStream($"C:\\Users\\850058620\\Desktop\\BookMyMedicine\\BookMyMedicine\\MessageExchange\\{obj.UserName}.txt", FileMode.Append, FileAccess.Write);
+            FileStream fs = new FileStream($"C:\\Users\\Hp\\Desktop\\BookMyMedicine\\MessageExchange\\{obj.UserName}.txt", FileMode.Append, FileAccess.Write);
             StreamWriter writer = new StreamWriter(fs);
 
             string time = DateTime.Now.ToString("hh:mm:ss"); // includes leading zeros
@@ -66,7 +66,7 @@ namespace SecurityMine.Models
 
         public void WriteMessagesAsUser(SendMessageValidation obj)
         {
-            FileStream fs = new FileStream($"C:\\Users\\850058620\\Desktop\\BookMyMedicine\\BookMyMedicine\\MessageExchange\\{obj.UserName}.txt", FileMode.Append, FileAccess.Write);
+            FileStream fs = new FileStream($"C:\\Users\\Hp\\Desktop\\BookMyMedicine\\MessageExchange\\{obj.UserName}.txt", FileMode.Append, FileAccess.Write);
             StreamWriter writer = new StreamWriter(fs);
 
             string time = DateTime.Now.ToString("hh:mm:ss"); // includes leading zeros
@@ -79,7 +79,7 @@ namespace SecurityMine.Models
 
         public void WriteMessagesAsUserToMasterAdminFile(SendMessageValidation obj)
         {
-            FileStream fs = new FileStream(@"C:\Users\850058620\Desktop\BookMyMedicine\BookMyMedicine\MessageExchange\Admin.txt", FileMode.Append, FileAccess.Write);
+            FileStream fs = new FileStream("C:\\Users\\Hp\\Desktop\\BookMyMedicine\\MessageExchange\\Admin.txt", FileMode.Append, FileAccess.Write);
             StreamWriter writer = new StreamWriter(fs);
 
             string time = DateTime.Now.ToString("hh:mm:ss"); // includes leading zeros
@@ -93,7 +93,7 @@ namespace SecurityMine.Models
         public List<string> ReadMyMessages(ReadMessagesValidation obj)
         {
             List<string> list = new List<string>();
-            string path = $"C:\\Users\\850058620\\Desktop\\BookMyMedicine\\BookMyMedicine\\MessageExchange\\{obj.UserName}.txt";
+            string path = $"C:\\Users\\Hp\\Desktop\\BookMyMedicine\\MessageExchange\\{obj.UserName}.txt";
             if (File.Exists(path) == false)
             {
                 list = null;
@@ -101,7 +101,7 @@ namespace SecurityMine.Models
             }
             else
             {
-                FileStream fs = new FileStream($"C:\\Users\\850058620\\Desktop\\BookMyMedicine\\BookMyMedicine\\MessageExchange\\{obj.UserName}.txt", FileMode.Open, FileAccess.Read);
+                FileStream fs = new FileStream($"C:\\Users\\Hp\\Desktop\\BookMyMedicine\\MessageExchange\\{obj.UserName}.txt", FileMode.Open, FileAccess.Read);
 
                 StreamReader reader = new StreamReader(fs);
 
@@ -134,7 +134,7 @@ namespace SecurityMine.Models
             //writer.Close();
             //fs.Close();
 
-            System.IO.File.WriteAllText(@"C:\Users\850058620\Desktop\BookMyMedicine\BookMyMedicine\AdminMessageFileSize.txt", length.ToString());
+            System.IO.File.WriteAllText(@"C:\Users\Hp\Desktop\BookMyMedicine\AdminMessageFileSize.txt", length.ToString());
         }
 
         public string ReadLastLineInAdminMessageSizeFile()
@@ -142,9 +142,47 @@ namespace SecurityMine.Models
             //FileStream fs = new FileStream("C:\\Users\\Hp\\Desktop\\SecurityMine\\AdminMessageFileSize.txt", FileMode.Open, FileAccess.Read);
             //StreamReader reader = new StreamReader(fs);
 
-            string last_line= File.ReadAllLines(@"C:\Users\850058620\Desktop\BookMyMedicine\BookMyMedicine\AdminMessageFileSize.txt").Last();
+            string last_line= File.ReadAllLines(@"C:\Users\Hp\Desktop\BookMyMedicine\AdminMessageFileSize.txt").Last();
 
             return last_line;
+        }
+
+        public void WriteFeedBackToFile(FeedBackValidation obj)
+        {
+            FileStream fs = new FileStream(@"C:\Users\Hp\Desktop\BookMyMedicine\FeedBack.txt", FileMode.Append, FileAccess.Write);
+            StreamWriter writer = new StreamWriter(fs);
+
+            string time = DateTime.Now.ToString("hh:mm:ss"); // includes leading zeros
+            string date = DateTime.Now.ToString("dd/MM/yy"); // includes leading zeros
+            writer.WriteLine(time + " " + " " + date + " " + obj.Name + " " + obj.Email +" " + obj.FeedBack);
+
+            writer.Close();
+            fs.Close();
+        }
+
+        public List<string> ReadFeedBackFromFile()
+        {
+            List<string> list = new List<string>();
+            FileStream fs = new FileStream(@"C:\Users\Hp\Desktop\BookMyMedicine\FeedBack.txt", FileMode.Open, FileAccess.Read);
+
+            StreamReader reader = new StreamReader(fs);
+
+            /* text = reader.ReadToEnd();*/  // read entire file in one go
+
+            fs.Seek(0, SeekOrigin.Begin);
+
+            reader.DiscardBufferedData();
+
+            while (reader.Peek() != -1)
+            {
+                list.Add(reader.ReadLine());
+
+            }
+
+            reader.Close();
+            fs.Close();
+
+            return list;
         }
     }
 
