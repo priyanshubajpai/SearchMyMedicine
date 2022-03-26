@@ -25,9 +25,9 @@
     <td>@u.Email</td>
     <td>@u.PhoneNumber</td>
     <td>Medical Store</td>
-    <td>
-        @Html.ActionLink("Delete", "DeleteUser", "Admin", new { id = u.Id }, new { @class = "btn btn-danger" })
-    </td>
+    @*<td>
+        @Html.ActionLink(" Delete","DeleteUser", "Admin", new { id = u.Id }, new { @class = "glyphicon glyphicon-remove btn btn-danger" })
+    </td>*@
     <td>
         @Html.ActionLink("Reset Password", "ResetPasswordAfterLogin", "Admin", new { u.UserName }, new { @class = "btn btn-primary" })
     </td>
@@ -38,7 +38,10 @@
         @Html.ActionLink("Contact Details", "DisplayContactDetail", "Custom", new { u.Id }, new { @class = "btn btn-warning" })
     </td>
     <td>
-        @Html.ActionLink("Display Medicine List", "DisplayMedicineListToAdmin", "Custom", new { id=u.Id }, new { @class = "btn btn-info" })
+        @Html.ActionLink("Display Medicine List", "DisplayMedicineListToAdmin", "Custom", new { id = u.Id }, new { @class = "btn btn-info" })
+    </td>
+    <td>
+        @Html.ActionLink("Lockout Status", "UserLockoutAction", "Admin", new { id = u.Id }, new { @class = "btn btn-info" })
     </td>
 </tr>
         }
