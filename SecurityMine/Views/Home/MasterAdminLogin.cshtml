@@ -74,7 +74,7 @@
             @Html.ActionLink(" List Deregistered Users", "GetDeletedUsers", "FileManage", null, new { @class = "glyphicon glyphicon-trash btn btn-info my-btn" })
         </div>
         <div class="btn-group">
-            @Html.ActionLink(" Get FeedBack", "ReadFeedBack","FileManage",null, new { @class = "glyphicon glyphicon-file btn btn-info my-btn" })
+            @Html.ActionLink(" Get FeedBack", "ReadFeedBack", "FileManage", null, new { @class = "glyphicon glyphicon-file btn btn-info my-btn" })
         </div>
     </div>
 
@@ -140,6 +140,7 @@
         .heading {
             font-family: cursive;
         }
+
         .btn-group {
             padding-left: 2px;
             padding-right: 2px; /*//to add space in btn justified*/
@@ -181,15 +182,15 @@
     <center>
         @using (Html.BeginForm("SendMessageToAdmin", "FileManage", FormMethod.Post))
         {
-        @*@Html.LabelFor(u => u.UserName)
-        <br />*@
-        @Html.TextBoxFor(u => u.UserName, new { @Value = User.Identity.Name, @readonly = true })
-        @Html.ValidationMessageFor(u => u.UserName, "", new { @class = "text-danger" })
-        <br />
-        <br />
-        @*<input type="submit" value="Send Message To Admin" class="btn btn-warning" />*@
-        @*<button class="glyphicon glyphicon-folder-open btn btn-success" type="submit"> Message Admin</button>*@
-        <button class="glyphicon glyphicon-folder-open btn btn-success float-right" type="submit"> Message Admin</button>
+            @*@Html.LabelFor(u => u.UserName)
+                <br />*@
+            @Html.TextBoxFor(u => u.UserName, new { @Value = User.Identity.Name, @readonly = true })
+            @Html.ValidationMessageFor(u => u.UserName, "", new { @class = "text-danger" })
+            <br />
+            <br />
+            @*<input type="submit" value="Send Message To Admin" class="btn btn-warning" />*@
+            @*<button class="glyphicon glyphicon-folder-open btn btn-success" type="submit"> Message Admin</button>*@
+            <button class="glyphicon glyphicon-folder-open btn btn-success float-right" type="submit"> Message Admin</button>
         }
     </center>
 
@@ -197,17 +198,17 @@
         <br />
         @if (ViewBag.NoSuchUserPresent == null)
         {
-        using (Html.BeginForm("GetMyMessageAsUser", "FileManage", FormMethod.Post))
-        {
-        @*@Html.LabelFor(u => u.UserName)
-        <br />*@
-        @Html.TextBoxFor(u => u.UserName, new { @Value = User.Identity.Name, @readonly = true })
-        @Html.ValidationMessageFor(u => u.UserName, "", new { @class = "text-danger" })
-        <br />
-        <br />
-        @*<input type="submit" value="My Messages" class="btn btn-warning" />*@
-        <button class="glyphicon glyphicon-folder-open btn btn-success float-right" type="submit"> View Messages</button>
-        }
+            using (Html.BeginForm("GetMyMessageAsUser", "FileManage", FormMethod.Post))
+            {
+                @*@Html.LabelFor(u => u.UserName)
+                    <br />*@
+                @Html.TextBoxFor(u => u.UserName, new { @Value = User.Identity.Name, @readonly = true })
+                @Html.ValidationMessageFor(u => u.UserName, "", new { @class = "text-danger" })
+                <br />
+                <br />
+                @*<input type="submit" value="My Messages" class="btn btn-warning" />*@
+                <button class="glyphicon glyphicon-folder-open btn btn-success float-right" type="submit"> View Messages</button>
+            }
         }
     </center>
     <br />
@@ -220,4 +221,18 @@
     @*@Html.ActionLink(" Display Medicine List", "DisplayMedicineList", "Custom", new { ViewBag.UserId }, new { @class = "glyphicon glyphicon-edit btn btn-info my-btn" })*@
 
 
+}
+
+@*-----------------------------------------------*@
+
+@if (ViewContext.HttpContext.User.IsInRole("Suspended"))
+{
+    <style>
+        .h2{
+            color:orangered;
+        }
+    </style>
+<center>
+    <h2 class="h2"><strong>Account has been Suspended by Admin!</strong></h2>
+</center>
 }

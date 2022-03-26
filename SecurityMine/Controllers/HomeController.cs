@@ -51,7 +51,7 @@ namespace SecurityMine.Controllers
             return View(newuser);
         }
 
-        [Authorize(Roles = "Administrator,MedicalStore")]
+        [Authorize(Roles = "Administrator,MedicalStore,Suspended")]
         public ActionResult MasterAdminLogin()
         {
             string id = User.Identity.GetUserId();

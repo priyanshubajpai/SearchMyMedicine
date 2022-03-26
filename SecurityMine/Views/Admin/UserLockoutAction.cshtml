@@ -1,0 +1,28 @@
+﻿@using SecurityMine.Models
+@model LockoutValidation
+
+@{
+    ViewBag.Title = "UserLockoutAction";
+}
+
+<center>
+    <h2><strong>User Lockout Status</strong></h2>
+
+    @using (Html.BeginForm("LockoutPerform", "Admin", FormMethod.Post, new { @class = "form-horizontal" }))
+    {
+        @Html.LabelFor(l => l.UserName, new { @class = "control-label" })
+        <br />
+        @Html.TextBoxFor(l => l.UserName, new { @class = "form-control", @Value = ViewBag.UserName, @readonly = true })
+        @Html.ValidationMessageFor(l => l.UserName, "", new { @class = "text-danger" })
+        <br />
+        @Html.LabelFor(l => l.LockoutStateEnabled, new { @class = "control-label" })
+        <br />
+        @Html.TextBoxFor(l => l.LockoutStateEnabled, new { @class = "form-control", @Value = ViewBag.IsSuspended, placeholder = "Enter True/False" })
+        @Html.ValidationMessageFor(l => l.LockoutStateEnabled, "", new { @class = "text-danger" })
+        <br />
+
+        <br />
+        <input type="submit" value="Set Lockout Status" class="btn btn-danger" />
+    }
+</center>
+
