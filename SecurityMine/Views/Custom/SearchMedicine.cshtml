@@ -20,9 +20,6 @@ else
 </center>
 
 <table class="table table-striped">
-
-    @foreach (DisplaySearch search in Model)
-    {
     <tr>
         <td><strong>Store Name</strong></td>
         <td><strong>Email</strong></td>
@@ -33,6 +30,9 @@ else
         <td><strong>Stock</strong></td>
         <td><strong>Address</strong></td>
     </tr>
+    @foreach (DisplaySearch search in Model)
+    {
+
         <tr>
             <td>@search.StoreName</td>
             <td>@search.Email</td>
