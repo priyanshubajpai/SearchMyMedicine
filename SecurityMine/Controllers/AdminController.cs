@@ -205,7 +205,8 @@ namespace SecurityMine.Controllers
                         context.Addresses.Add(address);
                         context.SaveChanges();
 
-                        return View("Thanks");
+                        //string path = HttpContext.Request.RawUrl;
+                        return View("UserAddedSuccessfully");
                     }
                     else
                     {
@@ -432,6 +433,11 @@ namespace SecurityMine.Controllers
         }
 
         public ActionResult Thanks()
+        {
+            return View();
+        }
+
+        public ActionResult UserAddedSuccessfully()
         {
             return View();
         }

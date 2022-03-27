@@ -234,6 +234,9 @@
     <Content Include="Views\Custom\UpdateStockAndPrice.cshtml" />
     <Content Include="Views\FileManage\ReadFeedBack.cshtml" />
     <Content Include="Views\Admin\UserLockoutAction.cshtml" />
+    <Content Include="Views\Custom\StoreAddressFromAdmin.cshtml" />
+    <Content Include="Views\Admin\UserAddedSuccessfully.cshtml" />
+    <Content Include="Views\Custom\MedicineSorting.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

@@ -27,10 +27,47 @@ namespace SecurityMine.Controllers
         public ActionResult StoreAddress()
         {
             StoreAddressValidation obj = new StoreAddressValidation();
+
+            /////////////////////////////
+            ///
+            AppIdentityDbContext context = new AppIdentityDbContext();
+            string id = User.Identity.GetUserId();
+            var res = context.Addresses.SingleOrDefault(adrs => adrs.UserId == id);
+            ViewBag.AddressLine = res.AddressLine;
+            ViewBag.Dist = res.District;
+            ViewBag.City = res.City;
+            ViewBag.Pin = res.PinCode;
+            ViewBag.State = res.State;
+            ViewBag.Country = res.Country;
+            return View(obj);
+        }
+        /// <summary>
+        /// ///////////////////////////////////////////////////////////////////////
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult StoreAddressFromAdmin(string id)
+        {
+            StoreAddressValidation obj = new StoreAddressValidation();
+
+            /////////////////////////////
+            ///
+            AppIdentityDbContext context = new AppIdentityDbContext();
+            var res = context.Addresses.SingleOrDefault(adrs => adrs.UserId == id);
+            ViewBag.AddressLine = res.AddressLine;
+            ViewBag.Dist = res.District;
+            ViewBag.City = res.City;
+            ViewBag.Pin = res.PinCode;
+            ViewBag.State = res.State;
+            ViewBag.Country = res.Country;
+
+            AppUser user = UserManager.FindById(id);
+            ViewBag.UserName=user.UserName;
             return View(obj);
         }
 
-
+        /// <summary>
+        /// ///////////////////////////////////////////
+        
         [HttpPost]
         public ActionResult AddAddress(StoreAddressValidation obj)
         {
@@ -75,6 +112,59 @@ namespace SecurityMine.Controllers
             }
         }
 
+        /// <summary>
+        /// //////////////////////////////////
+        /// 
+        [HttpPost]
+        public ActionResult AddAddressFromAdmin(StoreAddressValidation obj,string UserName)
+        {
+            if (ModelState.IsValid == false)
+            {
+                return View("~/Views/Custom/StoreAddressFromAdmin.cshtml", obj);
+            }
+            else
+            {
+                Address address = new Address();
+                address.AddressLine = obj.AddressLine;
+                address.District = obj.District;
+                address.City = obj.City;
+                address.PinCode = obj.PinCode;
+                address.State = obj.State;
+                address.Country = obj.Country;
+
+                AppUser user = UserManager.FindByName(UserName);
+                string id = user.Id;
+
+                address.UserId = id;
+
+                //AppUser appUser = new AppUser();
+                //appUser.Addresses.Add(address);
+
+                AppIdentityDbContext context = new AppIdentityDbContext();
+
+                var res = context.Addresses.SingleOrDefault(adrs => adrs.UserId == id);
+                if (res == null)
+                {
+                    context.Addresses.Add(address);
+                    context.SaveChanges();
+                }
+                else
+                {
+                    context.Addresses.Remove(res);
+                    context.Addresses.Add(address);
+                    context.SaveChanges();
+                }
+
+
+                return View("~/Views/Admin/Thanks.cshtml", obj);
+            }
+        }
+
+        /// <summary>
+        /// /////////////////////////////////////
+        
+
+
         public ActionResult DisplayContactDetail(string id)
         {
             AppIdentityDbContext context = new AppIdentityDbContext();
@@ -90,6 +180,7 @@ namespace SecurityMine.Controllers
             AppUser user = UserManager.FindById(id);
             ViewBag.Name = user.UserName;
             //ViewBag.Info = res.AddressLine + " " + res.District + " " + res.City + " " + res.PinCode + " " + res.State + " " + res.Country;
+            
             return View();
         }
 
@@ -369,6 +460,240 @@ namespace SecurityMine.Controllers
 
                 return View("~/Views/Admin/Thanks.cshtml");
             }
+        }
+
+        public ActionResult MedicineSorting(string SortParameter)
+        {
+            AppIdentityDbContext context = new AppIdentityDbContext();
+            AddMedicineValidation dispobj;
+            List<AddMedicineValidation> list = new List<AddMedicineValidation>();
+
+            if (SortParameter.Equals("StockAsc"))
+            {
+                var result = (from m in context.Medicines
+                              join s in context.StoreManagements
+                              on m.MedicineId equals s.MedicineId
+                              orderby s.Stock
+                              select new { m.MedicineName, m.MedicineType, m.Expiry, m.Price, s.Stock, s.UserId }).ToList();
+
+                //ViewBag.Data = result;
+                foreach (var r in result)
+                {
+                    dispobj = new AddMedicineValidation();
+                    dispobj.MedicineName = r.MedicineName;
+                    dispobj.MedicineType = r.MedicineType;
+                    dispobj.Expiry = r.Expiry;
+                    dispobj.Price = r.Price;
+                    dispobj.Stock = r.Stock;
+
+                    list.Add(dispobj);
+                }
+                ViewBag.SortingDoneBy = "Stock(Low To High)";
+            }
+            else if (SortParameter.Equals("StockDesc"))
+            {
+                var result = (from m in context.Medicines
+                              join s in context.StoreManagements
+                              on m.MedicineId equals s.MedicineId
+                              orderby s.Stock descending
+                              select new { m.MedicineName, m.MedicineType, m.Expiry, m.Price, s.Stock, s.UserId }).ToList();
+
+                //ViewBag.Data = result;
+                foreach (var r in result)
+                {
+                    dispobj = new AddMedicineValidation();
+                    dispobj.MedicineName = r.MedicineName;
+                    dispobj.MedicineType = r.MedicineType;
+                    dispobj.Expiry = r.Expiry;
+                    dispobj.Price = r.Price;
+                    dispobj.Stock = r.Stock;
+
+                    list.Add(dispobj);
+                }
+                ViewBag.SortingDoneBy = "Stock(High To Low)";
+            }
+            else if (SortParameter.Equals("PriceAsc"))
+            {
+                var result = (from m in context.Medicines
+                              join s in context.StoreManagements
+                              on m.MedicineId equals s.MedicineId
+                              orderby m.Price
+                              select new { m.MedicineName, m.MedicineType, m.Expiry, m.Price, s.Stock, s.UserId }).ToList();
+
+                //ViewBag.Data = result;
+                foreach (var r in result)
+                {
+                    dispobj = new AddMedicineValidation();
+                    dispobj.MedicineName = r.MedicineName;
+                    dispobj.MedicineType = r.MedicineType;
+                    dispobj.Expiry = r.Expiry;
+                    dispobj.Price = r.Price;
+                    dispobj.Stock = r.Stock;
+
+                    list.Add(dispobj);
+                }
+                ViewBag.SortingDoneBy = "Price(Low To High)";
+            }
+            else if (SortParameter.Equals("PriceDesc"))
+            {
+                var result = (from m in context.Medicines
+                              join s in context.StoreManagements
+                              on m.MedicineId equals s.MedicineId
+                              orderby m.Price descending
+                              select new { m.MedicineName, m.MedicineType, m.Expiry, m.Price, s.Stock, s.UserId }).ToList();
+
+                //ViewBag.Data = result;
+                foreach (var r in result)
+                {
+                    dispobj = new AddMedicineValidation();
+                    dispobj.MedicineName = r.MedicineName;
+                    dispobj.MedicineType = r.MedicineType;
+                    dispobj.Expiry = r.Expiry;
+                    dispobj.Price = r.Price;
+                    dispobj.Stock = r.Stock;
+
+                    list.Add(dispobj);
+                }
+                ViewBag.SortingDoneBy = "Price(High To Low)";
+            }
+            else if (SortParameter.Equals("ExpiryAsc"))
+            {
+                var result = (from m in context.Medicines
+                              join s in context.StoreManagements
+                              on m.MedicineId equals s.MedicineId
+                              orderby m.Expiry
+                              select new { m.MedicineName, m.MedicineType, m.Expiry, m.Price, s.Stock, s.UserId }).ToList();
+
+                //ViewBag.Data = result;
+                foreach (var r in result)
+                {
+                    dispobj = new AddMedicineValidation();
+                    dispobj.MedicineName = r.MedicineName;
+                    dispobj.MedicineType = r.MedicineType;
+                    dispobj.Expiry = r.Expiry;
+                    dispobj.Price = r.Price;
+                    dispobj.Stock = r.Stock;
+
+                    list.Add(dispobj);
+                }
+                ViewBag.SortingDoneBy = "Expiry(Early First)";
+            }
+            else if (SortParameter.Equals("ExpiryDesc"))
+            {
+                var result = (from m in context.Medicines
+                              join s in context.StoreManagements
+                              on m.MedicineId equals s.MedicineId
+                              orderby m.Expiry descending
+                              select new { m.MedicineName, m.MedicineType, m.Expiry, m.Price, s.Stock, s.UserId }).ToList();
+
+                //ViewBag.Data = result;
+                foreach (var r in result)
+                {
+                    dispobj = new AddMedicineValidation();
+                    dispobj.MedicineName = r.MedicineName;
+                    dispobj.MedicineType = r.MedicineType;
+                    dispobj.Expiry = r.Expiry;
+                    dispobj.Price = r.Price;
+                    dispobj.Stock = r.Stock;
+
+                    list.Add(dispobj);
+                }
+                ViewBag.SortingDoneBy = "Expiry(Late First)";
+            }
+            else if (SortParameter.Equals("MedicineNameAsc"))
+            {
+                var result = (from m in context.Medicines
+                              join s in context.StoreManagements
+                              on m.MedicineId equals s.MedicineId
+                              orderby m.MedicineName
+                              select new { m.MedicineName, m.MedicineType, m.Expiry, m.Price, s.Stock, s.UserId }).ToList();
+
+                //ViewBag.Data = result;
+                foreach (var r in result)
+                {
+                    dispobj = new AddMedicineValidation();
+                    dispobj.MedicineName = r.MedicineName;
+                    dispobj.MedicineType = r.MedicineType;
+                    dispobj.Expiry = r.Expiry;
+                    dispobj.Price = r.Price;
+                    dispobj.Stock = r.Stock;
+
+                    list.Add(dispobj);
+                }
+                ViewBag.SortingDoneBy = "Medicine Name(A-Z)";
+            }
+            else if (SortParameter.Equals("MedicineNameDesc"))
+            {
+                var result = (from m in context.Medicines
+                              join s in context.StoreManagements
+                              on m.MedicineId equals s.MedicineId
+                              orderby m.MedicineName descending
+                              select new { m.MedicineName, m.MedicineType, m.Expiry, m.Price, s.Stock, s.UserId }).ToList();
+
+                //ViewBag.Data = result;
+                foreach (var r in result)
+                {
+                    dispobj = new AddMedicineValidation();
+                    dispobj.MedicineName = r.MedicineName;
+                    dispobj.MedicineType = r.MedicineType;
+                    dispobj.Expiry = r.Expiry;
+                    dispobj.Price = r.Price;
+                    dispobj.Stock = r.Stock;
+
+                    list.Add(dispobj);
+                }
+                ViewBag.SortingDoneBy = "Medicine Name(Z-A)";
+            }
+            else if (SortParameter.Equals("MedicineTypeAsc"))
+            {
+                var result = (from m in context.Medicines
+                              join s in context.StoreManagements
+                              on m.MedicineId equals s.MedicineId
+                              orderby m.MedicineType
+                              select new { m.MedicineName, m.MedicineType, m.Expiry, m.Price, s.Stock, s.UserId }).ToList();
+
+                //ViewBag.Data = result;
+                foreach (var r in result)
+                {
+                    dispobj = new AddMedicineValidation();
+                    dispobj.MedicineName = r.MedicineName;
+                    dispobj.MedicineType = r.MedicineType;
+                    dispobj.Expiry = r.Expiry;
+                    dispobj.Price = r.Price;
+                    dispobj.Stock = r.Stock;
+
+                    list.Add(dispobj);
+                }
+                ViewBag.SortingDoneBy = "Medicine Type(A-Z)";
+            }
+            else if (SortParameter.Equals("MedicineTypeDesc"))
+            {
+                var result = (from m in context.Medicines
+                              join s in context.StoreManagements
+                              on m.MedicineId equals s.MedicineId
+                              orderby m.MedicineType descending
+                              select new { m.MedicineName, m.MedicineType, m.Expiry, m.Price, s.Stock, s.UserId }).ToList();
+
+                //ViewBag.Data = result;
+                foreach (var r in result)
+                {
+                    dispobj = new AddMedicineValidation();
+                    dispobj.MedicineName = r.MedicineName;
+                    dispobj.MedicineType = r.MedicineType;
+                    dispobj.Expiry = r.Expiry;
+                    dispobj.Price = r.Price;
+                    dispobj.Stock = r.Stock;
+
+                    list.Add(dispobj);
+                }
+                ViewBag.SortingDoneBy = "Medicine Type(Z-A)";
+            }
+
+            
+            return View(list);
+
+
+
         }
 
     }
