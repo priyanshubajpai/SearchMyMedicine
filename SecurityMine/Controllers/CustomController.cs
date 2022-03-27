@@ -27,6 +27,18 @@ namespace SecurityMine.Controllers
         public ActionResult StoreAddress()
         {
             StoreAddressValidation obj = new StoreAddressValidation();
+
+            /////////////////////////////
+            ///
+            AppIdentityDbContext context = new AppIdentityDbContext();
+            string id = User.Identity.GetUserId();
+            var res = context.Addresses.SingleOrDefault(adrs => adrs.UserId == id);
+            ViewBag.AddressLine = res.AddressLine;
+            ViewBag.Dist = res.District;
+            ViewBag.City = res.City;
+            ViewBag.Pin = res.PinCode;
+            ViewBag.State = res.State;
+            ViewBag.Country = res.Country;
             return View(obj);
         }
 
