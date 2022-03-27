@@ -205,6 +205,7 @@ namespace SecurityMine.Controllers
                         context.Addresses.Add(address);
                         context.SaveChanges();
 
+                        //string path = HttpContext.Request.RawUrl;
                         return View("Thanks");
                     }
                     else

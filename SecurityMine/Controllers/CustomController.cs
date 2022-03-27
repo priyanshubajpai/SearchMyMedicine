@@ -41,8 +41,33 @@ namespace SecurityMine.Controllers
             ViewBag.Country = res.Country;
             return View(obj);
         }
+        /// <summary>
+        /// ///////////////////////////////////////////////////////////////////////
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult StoreAddressFromAdmin(string id)
+        {
+            StoreAddressValidation obj = new StoreAddressValidation();
 
+            /////////////////////////////
+            ///
+            AppIdentityDbContext context = new AppIdentityDbContext();
+            var res = context.Addresses.SingleOrDefault(adrs => adrs.UserId == id);
+            ViewBag.AddressLine = res.AddressLine;
+            ViewBag.Dist = res.District;
+            ViewBag.City = res.City;
+            ViewBag.Pin = res.PinCode;
+            ViewBag.State = res.State;
+            ViewBag.Country = res.Country;
 
+            AppUser user = UserManager.FindById(id);
+            ViewBag.UserName=user.UserName;
+            return View(obj);
+        }
+
+        /// <summary>
+        /// ///////////////////////////////////////////
+        
         [HttpPost]
         public ActionResult AddAddress(StoreAddressValidation obj)
         {
@@ -86,6 +111,59 @@ namespace SecurityMine.Controllers
                 return View("~/Views/Admin/Thanks.cshtml", obj);
             }
         }
+
+        /// <summary>
+        /// //////////////////////////////////
+        /// 
+        [HttpPost]
+        public ActionResult AddAddressFromAdmin(StoreAddressValidation obj,string UserName)
+        {
+            if (ModelState.IsValid == false)
+            {
+                return View("~/Views/Custom/StoreAddressFromAdmin.cshtml", obj);
+            }
+            else
+            {
+                Address address = new Address();
+                address.AddressLine = obj.AddressLine;
+                address.District = obj.District;
+                address.City = obj.City;
+                address.PinCode = obj.PinCode;
+                address.State = obj.State;
+                address.Country = obj.Country;
+
+                AppUser user = UserManager.FindByName(UserName);
+                string id = user.Id;
+
+                address.UserId = id;
+
+                //AppUser appUser = new AppUser();
+                //appUser.Addresses.Add(address);
+
+                AppIdentityDbContext context = new AppIdentityDbContext();
+
+                var res = context.Addresses.SingleOrDefault(adrs => adrs.UserId == id);
+                if (res == null)
+                {
+                    context.Addresses.Add(address);
+                    context.SaveChanges();
+                }
+                else
+                {
+                    context.Addresses.Remove(res);
+                    context.Addresses.Add(address);
+                    context.SaveChanges();
+                }
+
+
+                return View("~/Views/Admin/Thanks.cshtml", obj);
+            }
+        }
+
+        /// <summary>
+        /// /////////////////////////////////////
+        
+
 
         public ActionResult DisplayContactDetail(string id)
         {
