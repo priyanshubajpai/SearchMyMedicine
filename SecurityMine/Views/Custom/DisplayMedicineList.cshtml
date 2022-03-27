@@ -17,6 +17,24 @@ else
 {
 <center>
     <h2><strong>Registered Medicines</strong></h2>
+
+    <form action="/Custom/MedicineSorting" method="post" class="form-horizontal">
+        <label class="control-label">Select Sorting Parameter</label>
+        <select name="SortParameter">
+            <option value="StockAsc">Stock(Low To High)</option>
+            <option value="StockDesc">Stock(High To Low)</option>
+            <option value="PriceAsc">Price(Low To High)</option>
+            <option value="PriceDesc">Price(High To Low)</option>
+            <option value="ExpiryAsc">Expiry(Early First)</option>
+            <option value="ExpiryDesc">Expiry(Late First)</option>
+            <option value="MedicineNameAsc">Medicine Name(A-Z)</option>
+            <option value="MedicineNameDesc">Medicine Name(Z-A)</option>
+            <option value="MedicineTypeAsc">Medicine Type(A-Z)</option>
+            <option value="MedicineTypeDesc">Medicine Type(Z-A)</option>
+        </select>
+        <input type="submit" value="Sort" class="btn btn-info">
+    </form>
+    <br />
 </center>
 
 <table class="table table-striped">
