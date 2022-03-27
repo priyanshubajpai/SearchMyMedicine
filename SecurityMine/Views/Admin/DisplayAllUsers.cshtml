@@ -7,9 +7,11 @@
 
 <center>
     <h2><strong>All Registered Stores</strong></h2>
+    @Html.ActionLink(" Register New Store", "MasterAdmin", "Home", null, new { @class = "glyphicon glyphicon-plus btn btn-info my-btn"})
 </center>
 <br />
-<table class="table table-striped">
+<br />
+<table class="table table-condensed">
     <tr>
         <td><strong>UserName</strong></td>
         <td><strong>Email</strong></td>
@@ -26,22 +28,25 @@
     <td>@u.PhoneNumber</td>
     <td>Medical Store</td>
     <td>
-        @Html.ActionLink(" Delete","DeleteUser", "Admin", new { id = u.Id }, new { @class = "glyphicon glyphicon-remove btn btn-danger" })
+        @Html.ActionLink(" Delete", "DeleteUser", "Admin", new { id = u.Id }, new { @class = "glyphicon glyphicon-remove btn btn-danger" })
     </td>
     <td>
-        @Html.ActionLink("Reset Password", "ResetPasswordAfterLogin", "Admin", new { u.UserName }, new { @class = "btn btn-primary" })
+        @Html.ActionLink(" Reset Password", "ResetPasswordAfterLogin", "Admin", new { u.UserName }, new { @class = "glyphicon glyphicon-registration-mark btn btn-info" })
     </td>
     <td>
-        @Html.ActionLink("Send Message", "SendMessageToUser", "FileManage", new { u.UserName }, new { @class = "btn btn-warning" })
+        @Html.ActionLink(" Message", "SendMessageToUser", "FileManage", new { u.UserName }, new { @class = "glyphicon glyphicon-send btn btn-warning" })
+    </td>
+    @*<td>
+        @Html.ActionLink(" Address", "DisplayContactDetail", "Custom", new { u.Id }, new { @class = "glyphicon glyphicon-eye-open btn btn-warning" })
+    </td>*@
+    <td>
+        @Html.ActionLink(" View/Update Address", "StoreAddressFromAdmin", "Custom", new { id=u.Id }, new { @class = "glyphicon glyphicon-eye-open btn btn-warning" })
     </td>
     <td>
-        @Html.ActionLink("Contact Details", "DisplayContactDetail", "Custom", new { u.Id }, new { @class = "btn btn-warning" })
+        @Html.ActionLink(" Medicines", "DisplayMedicineListToAdmin", "Custom", new { id = u.Id }, new { @class = "glyphicon glyphicon-list-alt btn btn-info" })
     </td>
     <td>
-        @Html.ActionLink("Display Medicine List", "DisplayMedicineListToAdmin", "Custom", new { id = u.Id }, new { @class = "btn btn-info" })
-    </td>
-    <td>
-        @Html.ActionLink("Lockout Status", "UserLockoutAction", "Admin", new { id = u.Id }, new { @class = "btn btn-info" })
+        @Html.ActionLink(" LockUser", "UserLockoutAction", "Admin", new { id = u.Id }, new { @class = "glyphicon glyphicon-off btn btn-danger" })
     </td>
 </tr>
         }

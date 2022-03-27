@@ -3,5 +3,25 @@
     ViewBag.Title = "Thanks";
 }
 
-<h2>Success</h2>
+<center>
+    <h2><strong>Success</strong></h2>
+    <img src="~/Content/Images/Success.png" alt="Photo of few Medicines" class="img-responsive" />
+
+
+    <div style="margin-top:20px;">
+        <div style="color:green;">
+            @ViewBag.Message
+        </div>
+        <div>
+            <i style="color:forestgreen">Please wait while you are redirected...</i>
+            <script>
+                window.setTimeout(function () {
+                    /*document.location.replace('../Home/MasterAdminLogin');*/
+                    document.location.replace('http://localhost:61345/Home/MasterAdminLogin');
+                }, 2000);
+            </script>
+        </div>
+    </div>
+</center>
+
 
