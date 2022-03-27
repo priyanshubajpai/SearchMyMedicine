@@ -186,8 +186,7 @@
                 <br />*@
             @Html.TextBoxFor(u => u.UserName, new { @Value = User.Identity.Name, @readonly = true })
             @Html.ValidationMessageFor(u => u.UserName, "", new { @class = "text-danger" })
-            <br />
-            <br />
+
             @*<input type="submit" value="Send Message To Admin" class="btn btn-warning" />*@
             @*<button class="glyphicon glyphicon-folder-open btn btn-success" type="submit"> Message Admin</button>*@
             <button class="glyphicon glyphicon-folder-open btn btn-success float-right" type="submit"> Message Admin</button>
@@ -204,8 +203,8 @@
                     <br />*@
                 @Html.TextBoxFor(u => u.UserName, new { @Value = User.Identity.Name, @readonly = true })
                 @Html.ValidationMessageFor(u => u.UserName, "", new { @class = "text-danger" })
-                <br />
-                <br />
+                
+
                 @*<input type="submit" value="My Messages" class="btn btn-warning" />*@
                 <button class="glyphicon glyphicon-folder-open btn btn-success float-right" type="submit"> View Messages</button>
             }

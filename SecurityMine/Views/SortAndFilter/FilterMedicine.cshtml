@@ -1,0 +1,113 @@
+﻿
+@{
+    ViewBag.Title = "FilterMedicine";
+}
+
+<center>
+    <h2><strong>Filter Medicine By</strong></h2>
+
+    <form action="/SortAndFilter/FilterPerform" method="post" class="form-horizontal">
+        <label class="control-label">Select FilterBy Parameter</label>
+        <select name="FilterByParameter" id="FilterByParameter" class="form-control">
+            <option>Select FilterBy Parameter</option>
+            <option value="MedicineName">Medicine Name</option>
+            <option value="MedicineType">Medicine Type</option>
+            <option value="Expiry">Expiry</option>
+            <option value="Price">Price</option>
+            <option value="Stock">Stock</option>
+        </select>
+
+        <div id="ExpiryFilter" style="display:none;">
+            <label for="Expiry" class="control-label">Select Date</label>
+            <input type="date" name="Expiry" class="form-control"/>
+        </div>
+
+        <div id="PriceFilter" style="display:none;">
+            <label for="Price" class="control-label">Enter Price</label>
+            <input type="number" step="any" name="Price" class="form-control"/>
+        </div>
+
+        <div id="StockFilter" style="display:none;">
+            <label for="Stock" class="control-label">Enter Stock</label>
+            <input type="number" name="Stock" class="form-control"/>
+        </div>
+
+        <div id="MedicineNameFilter" style="display:none;">
+            <label for="MedicineName" class="control-label">Enter Medicine Name</label>
+            <input type="text" name="MedicineName" class="form-control"/>
+        </div>
+
+        <div id="MedicineTypeFilter" style="display:none;">
+            <label for="MedicineType" class="control-label">Enter Medicine Type</label>
+            <input type="text" name="MedicineType"class="form-control" />
+        </div>
+        <br />
+        <div id="SubmitButton" style="display:none;">
+            <input type="submit" value="Filter Medicines" class="btn btn-info" />
+        </div>
+    </form>
+</center>
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
+
+<script>
+    $('#FilterByParameter').on('change', function () {
+        if ($(this).val() === "Expiry") {
+            $("#ExpiryFilter").show()
+            $("#PriceFilter").hide()
+            $("#StockFilter").hide()
+            $("#MedicineNameFilter").hide()
+            $("#MedicineTypeFilter").hide()
+
+            $("#SubmitButton").show()
+        }
+        else if ($(this).val() === "Price"){
+            $("#PriceFilter").show()
+            $("#ExpiryFilter").hide()
+            $("#StockFilter").hide()
+            $("#MedicineNameFilter").hide()
+            $("#MedicineTypeFilter").hide()
+
+            $("#SubmitButton").show()
+        }
+        else if ($(this).val() === "Stock") {
+            $("#StockFilter").show()
+            $("#ExpiryFilter").hide()
+            $("#PriceFilter").hide()
+            $("#MedicineNameFilter").hide()
+            $("#MedicineTypeFilter").hide()
+
+            $("#SubmitButton").show()
+        }
+        else if ($(this).val() === "MedicineName") {
+            $("#MedicineNameFilter").show()
+            $("#ExpiryFilter").hide()
+            $("#PriceFilter").hide()
+            $("#StockFilter").hide()
+            $("#MedicineTypeFilter").hide()
+
+            $("#SubmitButton").show()
+        }
+        else if ($(this).val() === "MedicineType") {
+            $("#MedicineTypeFilter").show()
+            $("#ExpiryFilter").hide()
+            $("#PriceFilter").hide()
+            $("#StockFilter").hide()
+            $("#MedicineNameFilter").hide()
+
+            $("#SubmitButton").show()
+        }
+        else {
+            $("#ExpiryFilter").hide()
+            $("#PriceFilter").hide()
+            $("#StockFilter").hide()
+            $("#MedicineNameFilter").hide()
+            $("#MedicineTypeFilter").hide()
+
+            $("#SubmitButton").hide()
+        }
+    });
+</script>
+
