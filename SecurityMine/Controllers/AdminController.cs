@@ -9,6 +9,8 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
+using System.Web.UI.WebControls;
 
 namespace SecurityMine.Controllers
 {
@@ -176,6 +178,7 @@ namespace SecurityMine.Controllers
                 if (Password.Equals(RetypePassword))
                 {
                     IdentityResult result = await UserManager.CreateAsync(user, Password);
+                    
 
                     if (result.Succeeded)
                     {
@@ -185,8 +188,17 @@ namespace SecurityMine.Controllers
                             await RoleManager.CreateAsync(r);
                         }
 
+                        if (RoleManager.Roles.Count() == 2)
+                        {
+                            var r = new AppRole() { Name = "Suspended" };
+                            await RoleManager.CreateAsync(r);
+                        }
+
                         user = UserManager.FindByName(user1.UserName);
                         UserManager.AddToRole(user.Id, "MedicalStore");
+                        //UserManager.UserLockoutEnabledByDefault = true;
+                        //UserManager.MaxFailedAccessAttemptsBeforeLockout = 5;
+                        //UserManager.SetLockoutEnabled(user.Id, true);
 
                         AppIdentityDbContext context = new AppIdentityDbContext();
                         Address address = new Address() {AddressLine="AddLine",District="Dist",City="City",PinCode="PinCode",State="State",Country="India",UserId=user.Id};
@@ -274,13 +286,26 @@ namespace SecurityMine.Controllers
             AppUser user = UserManager.FindById(id);
             fileobj.WriteDeletedUser(user);
 
-            ////////////////////////////////////////////////
-            ///
+            ////////////////////////////
 
             AppIdentityDbContext context = new AppIdentityDbContext();
             var res = context.Addresses.SingleOrDefault(u => u.UserId == user.Id);
-            context.Addresses.Remove(res);
-            context.SaveChanges();
+            if (res != null)
+            {
+                context.Addresses.Remove(res);
+                context.SaveChanges();
+            }
+
+            //var res1 = context.Medicines.SingleOrDefault(u => u.UserId == user.Id);
+            //context.Medicines.Remove(res1);
+            //context.SaveChanges();
+
+            var medvalues = context.Medicines.Where(x => x.UserId == user.Id);
+            if (medvalues != null)
+            {
+                context.Medicines.RemoveRange(medvalues);
+                context.SaveChanges();
+            }
 
             /////////////
             IdentityResult result = UserManager.Delete(user);
@@ -360,6 +385,49 @@ namespace SecurityMine.Controllers
                     ViewBag.Message = "No Such User Exists!!!";
                     return View("~/Views/Admin/ResetPasswd.cshtml", obj);
                 }
+            }
+        }
+
+        public ActionResult UserLockoutAction(string id)
+        {
+            AppUser user = UserManager.FindById(id);
+            if (UserManager.IsInRole(user.Id, "Suspended"))
+            {
+                ViewBag.IsSuspended = "True";
+            }
+            else
+            {
+                ViewBag.IsSuspended = "False";
+            }
+            ViewBag.UserName = user.UserName;
+            LockoutValidation obj = new LockoutValidation();
+            return View(obj);
+        }
+
+        public ActionResult LockoutPerform(LockoutValidation obj)
+        {
+            if(ModelState.IsValid==false)
+            {
+                return View("~/Views/Admin/UserLockoutAction.cshtml", obj);
+            }
+            else
+            {
+                AppUser user = UserManager.FindByName(obj.UserName);
+                //Login login = (Login)
+                //MembershipUser user1 = Membership.GetUser(obj.UserName);
+                //user.LockoutEnabled = true;
+                //user.LockoutEndDateUtc = DateTime.Now.AddSeconds(obj.LockUpto);
+                if (obj.LockoutStateEnabled.Equals("True"))
+                {
+                    UserManager.RemoveFromRole(user.Id, "MedicalStore");
+                    UserManager.AddToRole(user.Id, "Suspended");
+                }
+                else
+                {
+                    UserManager.RemoveFromRole(user.Id, "Suspended");
+                    UserManager.AddToRole(user.Id, "MedicalStore");
+                }
+                return View("Thanks");
             }
         }
 

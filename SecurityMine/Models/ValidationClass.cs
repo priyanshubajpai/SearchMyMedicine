@@ -86,4 +86,13 @@ namespace SecurityMine.Models
         [Required]
         public string FeedBack { get; set; }
     }
+
+    public class LockoutValidation
+    {
+        [Required]
+        public string UserName { get; set; }
+
+        [Required]
+        public string LockoutStateEnabled { get; set; }
+    }
 }
