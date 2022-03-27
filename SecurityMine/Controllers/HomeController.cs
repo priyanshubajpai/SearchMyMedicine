@@ -60,16 +60,19 @@ namespace SecurityMine.Controllers
 
             ViewBag.NoSuchUserPresent = null;
 
-            FileManagement obj = new FileManagement();
-            String prevlength = obj.ReadLastLineInAdminMessageSizeFile();
-           
-            string path = @"C:\Users\Hp\Desktop\BookMyMedicine\MessageExchange\Admin.txt";
-            long length = new System.IO.FileInfo(path).Length;
-            obj.WriteFileSize(length);
-
-            if(prevlength.Equals(length.ToString())==false)
+            if (UserManager.IsInRole(id, "Administrator"))
             {
-                ViewBag.New = "yes";
+                FileManagement obj = new FileManagement();
+                String prevlength = obj.ReadLastLineInAdminMessageSizeFile();
+
+                string path = @"C:\Users\Hp\Desktop\BookMyMedicine\MessageExchange\Admin.txt";
+                long length = new System.IO.FileInfo(path).Length;
+                obj.WriteFileSize(length);
+
+                if (prevlength.Equals(length.ToString()) == false)
+                {
+                    ViewBag.New = "yes";
+                }
             }
 
 
