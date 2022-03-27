@@ -25,9 +25,9 @@
     <td>@u.Email</td>
     <td>@u.PhoneNumber</td>
     <td>Medical Store</td>
-    @*<td>
+    <td>
         @Html.ActionLink(" Delete","DeleteUser", "Admin", new { id = u.Id }, new { @class = "glyphicon glyphicon-remove btn btn-danger" })
-    </td>*@
+    </td>
     <td>
         @Html.ActionLink("Reset Password", "ResetPasswordAfterLogin", "Admin", new { u.UserName }, new { @class = "btn btn-primary" })
     </td>

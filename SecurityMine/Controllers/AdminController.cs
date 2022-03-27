@@ -286,17 +286,26 @@ namespace SecurityMine.Controllers
             AppUser user = UserManager.FindById(id);
             fileobj.WriteDeletedUser(user);
 
-            ////////////////////////////////////////////////
-            /// Delete Functionality is defective.....
+            ////////////////////////////
 
             AppIdentityDbContext context = new AppIdentityDbContext();
             var res = context.Addresses.SingleOrDefault(u => u.UserId == user.Id);
-            context.Addresses.Remove(res);
-            context.SaveChanges();
+            if (res != null)
+            {
+                context.Addresses.Remove(res);
+                context.SaveChanges();
+            }
 
             //var res1 = context.Medicines.SingleOrDefault(u => u.UserId == user.Id);
             //context.Medicines.Remove(res1);
             //context.SaveChanges();
+
+            var medvalues = context.Medicines.Where(x => x.UserId == user.Id);
+            if (medvalues != null)
+            {
+                context.Medicines.RemoveRange(medvalues);
+                context.SaveChanges();
+            }
 
             /////////////
             IdentityResult result = UserManager.Delete(user);
