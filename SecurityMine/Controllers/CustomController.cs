@@ -102,6 +102,7 @@ namespace SecurityMine.Controllers
             AppUser user = UserManager.FindById(id);
             ViewBag.Name = user.UserName;
             //ViewBag.Info = res.AddressLine + " " + res.District + " " + res.City + " " + res.PinCode + " " + res.State + " " + res.Country;
+            
             return View();
         }
 
