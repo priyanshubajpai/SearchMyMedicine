@@ -18,9 +18,9 @@ else
 <center>
     <h2><strong>Registered Medicines</strong></h2>
 
-    <form action="/Custom/MedicineSorting" method="post" class="form-horizontal">
+    <form action="/SortAndFilter/MedicineSorting" method="post" class="form-horizontal">
         <label class="control-label">Select Sorting Parameter</label>
-        <select name="SortParameter">
+        <select name="SortParameter" >
             <option value="StockAsc">Stock(Low To High)</option>
             <option value="StockDesc">Stock(High To Low)</option>
             <option value="PriceAsc">Price(Low To High)</option>
@@ -33,7 +33,10 @@ else
             <option value="MedicineTypeDesc">Medicine Type(Z-A)</option>
         </select>
         <input type="submit" value="Sort" class="btn btn-info">
+        @Html.ActionLink("Filter", "FilterMedicine", "SortAndFilter", null, new { @class = "btn btn-info" })
     </form>
+
+    
     <br />
 </center>
 
