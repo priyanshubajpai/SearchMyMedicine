@@ -24,7 +24,22 @@
 
         <div id="PriceFilter" style="display:none;">
             <label for="Price" class="control-label">Enter Price</label>
-            <input type="number" step="any" name="Price" class="form-control" required value="0"/>
+            <input type="number" step="any" name="Price" class="form-control" required value="0" />
+            <label class="control-label">Select Price Comparison Attribute</label>
+            <select name="PriceAttribute" id="PriceAttribute" class="form-control">
+                @*<option>Select Filter Condition</option>*@
+                <option value="GreaterThan">Greater Than Entered Price</option>
+                <option value="GreaterThanEqual">Greater Than & Equals To Entered Price</option>
+                <option value="LessThan">Less Than Entered Price</option>
+                <option value="LessThanEqual">Less Than & Equals To Entered Price</option>
+                <option value="EqualTo">Equal to Price Value</option>
+            </select>
+
+            <label class="control-label">Sort By</label>
+            <select name="PriceSortAttribute" id="PriceSortAttribute" class="form-control">
+                <option value="Asc">Low To High</option>
+                <option value="Desc">High To Low</option>
+            </select>
         </div>
 
         <div id="StockFilter" style="display:none;">
@@ -32,12 +47,18 @@
             <input type="number" name="Stock" class="form-control" required value="0" />
             <label class="control-label">Select Stock Comparison Attribute</label>
             <select name="StockAttribute" id="StockAttribute" class="form-control">
-                <option>Select Filter Condition</option>
+                @*<option>Select Filter Condition</option>*@
                 <option value="GreaterThan">Greater Than Entered Stock</option>
                 <option value="GreaterThanEqual">Greater Than & Equals To Entered Stock</option>
                 <option value="LessThan">Less Than Entered Stock</option>
                 <option value="LessThanEqual">Less Than & Equals To Entered Stock</option>
                 <option value="EqualTo">Equal to Stock Value</option>
+            </select>
+
+            <label class="control-label">Sort By</label>
+            <select name="StockSortAttribute" id="StockSortAttribute" class="form-control">
+                <option value="Asc">Low To High</option>
+                <option value="Desc">High To Low</option>
             </select>
         </div>
 

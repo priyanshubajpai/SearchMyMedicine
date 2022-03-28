@@ -269,7 +269,7 @@ namespace SecurityMine.Controllers
         }
 
 
-        public ActionResult FilterPerform(string MedicineName,int Stock,float Price,DateTime Expiry,string MedicineType,string StockAttribute)
+        public ActionResult FilterPerform(string MedicineName,int Stock,float Price,DateTime Expiry,string MedicineType,string StockAttribute,string PriceAttribute,string PriceSortAttribute, string StockSortAttribute)
         {
             AppIdentityDbContext context = new AppIdentityDbContext();
             AddMedicineValidation dispobj;
@@ -318,106 +318,444 @@ namespace SecurityMine.Controllers
             }
             else if (Stock!=0)
             {
-                if(StockAttribute.Equals("EqualTo"))
+                if (StockSortAttribute.Equals("Asc"))
                 {
-                    var result = (from m in context.Medicines
-                                  join s in context.StoreManagements
-                                  on m.MedicineId equals s.MedicineId
-                                  where m.UserId == id && s.Stock==Stock
-                                  select new { m.MedicineName, m.MedicineType, m.Expiry, m.Price, s.Stock, s.UserId }).ToList();
-
-                    foreach (var r in result)
+                    if (StockAttribute.Equals("EqualTo"))
                     {
-                        dispobj = new AddMedicineValidation();
-                        dispobj.MedicineName = r.MedicineName;
-                        dispobj.MedicineType = r.MedicineType;
-                        dispobj.Expiry = r.Expiry;
-                        dispobj.Price = r.Price;
-                        dispobj.Stock = r.Stock;
+                        var result = (from m in context.Medicines
+                                      join s in context.StoreManagements
+                                      on m.MedicineId equals s.MedicineId
+                                      where m.UserId == id && s.Stock == Stock
+                                      orderby s.Stock
+                                      select new { m.MedicineName, m.MedicineType, m.Expiry, m.Price, s.Stock, s.UserId }).ToList();
 
-                        list.Add(dispobj);
+                        foreach (var r in result)
+                        {
+                            dispobj = new AddMedicineValidation();
+                            dispobj.MedicineName = r.MedicineName;
+                            dispobj.MedicineType = r.MedicineType;
+                            dispobj.Expiry = r.Expiry;
+                            dispobj.Price = r.Price;
+                            dispobj.Stock = r.Stock;
+
+                            list.Add(dispobj);
+                        }
+                    }
+                    else if (StockAttribute.Equals("GreaterThan"))
+                    {
+                        var result = (from m in context.Medicines
+                                      join s in context.StoreManagements
+                                      on m.MedicineId equals s.MedicineId
+                                      where m.UserId == id && s.Stock > Stock
+                                      orderby s.Stock
+                                      select new { m.MedicineName, m.MedicineType, m.Expiry, m.Price, s.Stock, s.UserId }).ToList();
+
+                        foreach (var r in result)
+                        {
+                            dispobj = new AddMedicineValidation();
+                            dispobj.MedicineName = r.MedicineName;
+                            dispobj.MedicineType = r.MedicineType;
+                            dispobj.Expiry = r.Expiry;
+                            dispobj.Price = r.Price;
+                            dispobj.Stock = r.Stock;
+
+                            list.Add(dispobj);
+                        }
+                    }
+                    else if (StockAttribute.Equals("GreaterThanEqual"))
+                    {
+                        var result = (from m in context.Medicines
+                                      join s in context.StoreManagements
+                                      on m.MedicineId equals s.MedicineId
+                                      where m.UserId == id && s.Stock >= Stock
+                                      orderby s.Stock
+                                      select new { m.MedicineName, m.MedicineType, m.Expiry, m.Price, s.Stock, s.UserId }).ToList();
+
+                        foreach (var r in result)
+                        {
+                            dispobj = new AddMedicineValidation();
+                            dispobj.MedicineName = r.MedicineName;
+                            dispobj.MedicineType = r.MedicineType;
+                            dispobj.Expiry = r.Expiry;
+                            dispobj.Price = r.Price;
+                            dispobj.Stock = r.Stock;
+
+                            list.Add(dispobj);
+                        }
+                    }
+                    else if (StockAttribute.Equals("LessThan"))
+                    {
+                        var result = (from m in context.Medicines
+                                      join s in context.StoreManagements
+                                      on m.MedicineId equals s.MedicineId
+                                      where m.UserId == id && s.Stock < Stock
+                                      orderby s.Stock
+                                      select new { m.MedicineName, m.MedicineType, m.Expiry, m.Price, s.Stock, s.UserId }).ToList();
+
+                        foreach (var r in result)
+                        {
+                            dispobj = new AddMedicineValidation();
+                            dispobj.MedicineName = r.MedicineName;
+                            dispobj.MedicineType = r.MedicineType;
+                            dispobj.Expiry = r.Expiry;
+                            dispobj.Price = r.Price;
+                            dispobj.Stock = r.Stock;
+
+                            list.Add(dispobj);
+                        }
+                    }
+                    else if (StockAttribute.Equals("LessThanEqual"))
+                    {
+                        var result = (from m in context.Medicines
+                                      join s in context.StoreManagements
+                                      on m.MedicineId equals s.MedicineId
+                                      where m.UserId == id && s.Stock <= Stock
+                                      orderby s.Stock
+                                      select new { m.MedicineName, m.MedicineType, m.Expiry, m.Price, s.Stock, s.UserId }).ToList();
+
+                        foreach (var r in result)
+                        {
+                            dispobj = new AddMedicineValidation();
+                            dispobj.MedicineName = r.MedicineName;
+                            dispobj.MedicineType = r.MedicineType;
+                            dispobj.Expiry = r.Expiry;
+                            dispobj.Price = r.Price;
+                            dispobj.Stock = r.Stock;
+
+                            list.Add(dispobj);
+                        }
                     }
                 }
-                else if (StockAttribute.Equals("GreaterThan"))
+                else if (StockSortAttribute.Equals("Desc"))
                 {
-                    var result = (from m in context.Medicines
-                                  join s in context.StoreManagements
-                                  on m.MedicineId equals s.MedicineId
-                                  where m.UserId == id && s.Stock>Stock
-                                  select new { m.MedicineName, m.MedicineType, m.Expiry, m.Price, s.Stock, s.UserId }).ToList();
-
-                    foreach (var r in result)
+                    if (StockAttribute.Equals("EqualTo"))
                     {
-                        dispobj = new AddMedicineValidation();
-                        dispobj.MedicineName = r.MedicineName;
-                        dispobj.MedicineType = r.MedicineType;
-                        dispobj.Expiry = r.Expiry;
-                        dispobj.Price = r.Price;
-                        dispobj.Stock = r.Stock;
+                        var result = (from m in context.Medicines
+                                      join s in context.StoreManagements
+                                      on m.MedicineId equals s.MedicineId
+                                      where m.UserId == id && s.Stock == Stock
+                                      orderby s.Stock descending
+                                      select new { m.MedicineName, m.MedicineType, m.Expiry, m.Price, s.Stock, s.UserId }).ToList();
 
-                        list.Add(dispobj);
+                        foreach (var r in result)
+                        {
+                            dispobj = new AddMedicineValidation();
+                            dispobj.MedicineName = r.MedicineName;
+                            dispobj.MedicineType = r.MedicineType;
+                            dispobj.Expiry = r.Expiry;
+                            dispobj.Price = r.Price;
+                            dispobj.Stock = r.Stock;
+
+                            list.Add(dispobj);
+                        }
+                    }
+                    else if (StockAttribute.Equals("GreaterThan"))
+                    {
+                        var result = (from m in context.Medicines
+                                      join s in context.StoreManagements
+                                      on m.MedicineId equals s.MedicineId
+                                      where m.UserId == id && s.Stock > Stock
+                                      orderby s.Stock descending
+                                      select new { m.MedicineName, m.MedicineType, m.Expiry, m.Price, s.Stock, s.UserId }).ToList();
+
+                        foreach (var r in result)
+                        {
+                            dispobj = new AddMedicineValidation();
+                            dispobj.MedicineName = r.MedicineName;
+                            dispobj.MedicineType = r.MedicineType;
+                            dispobj.Expiry = r.Expiry;
+                            dispobj.Price = r.Price;
+                            dispobj.Stock = r.Stock;
+
+                            list.Add(dispobj);
+                        }
+                    }
+                    else if (StockAttribute.Equals("GreaterThanEqual"))
+                    {
+                        var result = (from m in context.Medicines
+                                      join s in context.StoreManagements
+                                      on m.MedicineId equals s.MedicineId
+                                      where m.UserId == id && s.Stock >= Stock
+                                      orderby s.Stock descending
+                                      select new { m.MedicineName, m.MedicineType, m.Expiry, m.Price, s.Stock, s.UserId }).ToList();
+
+                        foreach (var r in result)
+                        {
+                            dispobj = new AddMedicineValidation();
+                            dispobj.MedicineName = r.MedicineName;
+                            dispobj.MedicineType = r.MedicineType;
+                            dispobj.Expiry = r.Expiry;
+                            dispobj.Price = r.Price;
+                            dispobj.Stock = r.Stock;
+
+                            list.Add(dispobj);
+                        }
+                    }
+                    else if (StockAttribute.Equals("LessThan"))
+                    {
+                        var result = (from m in context.Medicines
+                                      join s in context.StoreManagements
+                                      on m.MedicineId equals s.MedicineId
+                                      where m.UserId == id && s.Stock < Stock
+                                      orderby s.Stock descending
+                                      select new { m.MedicineName, m.MedicineType, m.Expiry, m.Price, s.Stock, s.UserId }).ToList();
+
+                        foreach (var r in result)
+                        {
+                            dispobj = new AddMedicineValidation();
+                            dispobj.MedicineName = r.MedicineName;
+                            dispobj.MedicineType = r.MedicineType;
+                            dispobj.Expiry = r.Expiry;
+                            dispobj.Price = r.Price;
+                            dispobj.Stock = r.Stock;
+
+                            list.Add(dispobj);
+                        }
+                    }
+                    else if (StockAttribute.Equals("LessThanEqual"))
+                    {
+                        var result = (from m in context.Medicines
+                                      join s in context.StoreManagements
+                                      on m.MedicineId equals s.MedicineId
+                                      where m.UserId == id && s.Stock <= Stock
+                                      orderby s.Stock descending
+                                      select new { m.MedicineName, m.MedicineType, m.Expiry, m.Price, s.Stock, s.UserId }).ToList();
+
+                        foreach (var r in result)
+                        {
+                            dispobj = new AddMedicineValidation();
+                            dispobj.MedicineName = r.MedicineName;
+                            dispobj.MedicineType = r.MedicineType;
+                            dispobj.Expiry = r.Expiry;
+                            dispobj.Price = r.Price;
+                            dispobj.Stock = r.Stock;
+
+                            list.Add(dispobj);
+                        }
                     }
                 }
-                else if (StockAttribute.Equals("GreaterThanEqual"))
+
+
+            }
+            else if(Price!=0)
+            {
+                if(PriceSortAttribute.Equals("Asc"))
                 {
-                    var result = (from m in context.Medicines
-                                  join s in context.StoreManagements
-                                  on m.MedicineId equals s.MedicineId
-                                  where m.UserId == id && s.Stock >= Stock
-                                  select new { m.MedicineName, m.MedicineType, m.Expiry, m.Price, s.Stock, s.UserId }).ToList();
-
-                    foreach (var r in result)
+                    if (PriceAttribute.Equals("EqualTo"))
                     {
-                        dispobj = new AddMedicineValidation();
-                        dispobj.MedicineName = r.MedicineName;
-                        dispobj.MedicineType = r.MedicineType;
-                        dispobj.Expiry = r.Expiry;
-                        dispobj.Price = r.Price;
-                        dispobj.Stock = r.Stock;
+                        var result = (from m in context.Medicines
+                                      join s in context.StoreManagements
+                                      on m.MedicineId equals s.MedicineId
+                                      where m.UserId == id && m.Price == Price
+                                      orderby m.Price
+                                      select new { m.MedicineName, m.MedicineType, m.Expiry, m.Price, s.Stock, s.UserId }).ToList();
 
-                        list.Add(dispobj);
+                        foreach (var r in result)
+                        {
+                            dispobj = new AddMedicineValidation();
+                            dispobj.MedicineName = r.MedicineName;
+                            dispobj.MedicineType = r.MedicineType;
+                            dispobj.Expiry = r.Expiry;
+                            dispobj.Price = r.Price;
+                            dispobj.Stock = r.Stock;
+
+                            list.Add(dispobj);
+                        }
+                    }
+                    else if (PriceAttribute.Equals("GreaterThan"))
+                    {
+                        var result = (from m in context.Medicines
+                                      join s in context.StoreManagements
+                                      on m.MedicineId equals s.MedicineId
+                                      where m.UserId == id && m.Price > Price
+                                      orderby m.Price
+                                      select new { m.MedicineName, m.MedicineType, m.Expiry, m.Price, s.Stock, s.UserId }).ToList();
+
+                        foreach (var r in result)
+                        {
+                            dispobj = new AddMedicineValidation();
+                            dispobj.MedicineName = r.MedicineName;
+                            dispobj.MedicineType = r.MedicineType;
+                            dispobj.Expiry = r.Expiry;
+                            dispobj.Price = r.Price;
+                            dispobj.Stock = r.Stock;
+
+                            list.Add(dispobj);
+                        }
+                    }
+                    else if (PriceAttribute.Equals("GreaterThanEqual"))
+                    {
+                        var result = (from m in context.Medicines
+                                      join s in context.StoreManagements
+                                      on m.MedicineId equals s.MedicineId
+                                      where m.UserId == id && m.Price >= Price
+                                      orderby m.Price
+                                      select new { m.MedicineName, m.MedicineType, m.Expiry, m.Price, s.Stock, s.UserId }).ToList();
+
+                        foreach (var r in result)
+                        {
+                            dispobj = new AddMedicineValidation();
+                            dispobj.MedicineName = r.MedicineName;
+                            dispobj.MedicineType = r.MedicineType;
+                            dispobj.Expiry = r.Expiry;
+                            dispobj.Price = r.Price;
+                            dispobj.Stock = r.Stock;
+
+                            list.Add(dispobj);
+                        }
+                    }
+                    else if (PriceAttribute.Equals("LessThan"))
+                    {
+                        var result = (from m in context.Medicines
+                                      join s in context.StoreManagements
+                                      on m.MedicineId equals s.MedicineId
+                                      where m.UserId == id && m.Price < Price
+                                      orderby m.Price
+                                      select new { m.MedicineName, m.MedicineType, m.Expiry, m.Price, s.Stock, s.UserId }).ToList();
+
+                        foreach (var r in result)
+                        {
+                            dispobj = new AddMedicineValidation();
+                            dispobj.MedicineName = r.MedicineName;
+                            dispobj.MedicineType = r.MedicineType;
+                            dispobj.Expiry = r.Expiry;
+                            dispobj.Price = r.Price;
+                            dispobj.Stock = r.Stock;
+
+                            list.Add(dispobj);
+                        }
+                    }
+                    else if (PriceAttribute.Equals("LessThanEqual"))
+                    {
+                        var result = (from m in context.Medicines
+                                      join s in context.StoreManagements
+                                      on m.MedicineId equals s.MedicineId
+                                      where m.UserId == id && m.Price <= Price
+                                      orderby m.Price
+                                      select new { m.MedicineName, m.MedicineType, m.Expiry, m.Price, s.Stock, s.UserId }).ToList();
+
+                        foreach (var r in result)
+                        {
+                            dispobj = new AddMedicineValidation();
+                            dispobj.MedicineName = r.MedicineName;
+                            dispobj.MedicineType = r.MedicineType;
+                            dispobj.Expiry = r.Expiry;
+                            dispobj.Price = r.Price;
+                            dispobj.Stock = r.Stock;
+
+                            list.Add(dispobj);
+                        }
                     }
                 }
-                else if (StockAttribute.Equals("LessThan"))
+                else if(PriceSortAttribute.Equals("Desc"))
                 {
-                    var result = (from m in context.Medicines
-                                  join s in context.StoreManagements
-                                  on m.MedicineId equals s.MedicineId
-                                  where m.UserId == id && s.Stock < Stock
-                                  select new { m.MedicineName, m.MedicineType, m.Expiry, m.Price, s.Stock, s.UserId }).ToList();
-
-                    foreach (var r in result)
+                    if (PriceAttribute.Equals("EqualTo"))
                     {
-                        dispobj = new AddMedicineValidation();
-                        dispobj.MedicineName = r.MedicineName;
-                        dispobj.MedicineType = r.MedicineType;
-                        dispobj.Expiry = r.Expiry;
-                        dispobj.Price = r.Price;
-                        dispobj.Stock = r.Stock;
+                        var result = (from m in context.Medicines
+                                      join s in context.StoreManagements
+                                      on m.MedicineId equals s.MedicineId
+                                      where m.UserId == id && m.Price == Price
+                                      orderby m.Price descending
+                                      select new { m.MedicineName, m.MedicineType, m.Expiry, m.Price, s.Stock, s.UserId }).ToList();
 
-                        list.Add(dispobj);
+                        foreach (var r in result)
+                        {
+                            dispobj = new AddMedicineValidation();
+                            dispobj.MedicineName = r.MedicineName;
+                            dispobj.MedicineType = r.MedicineType;
+                            dispobj.Expiry = r.Expiry;
+                            dispobj.Price = r.Price;
+                            dispobj.Stock = r.Stock;
+
+                            list.Add(dispobj);
+                        }
+                    }
+                    else if (PriceAttribute.Equals("GreaterThan"))
+                    {
+                        var result = (from m in context.Medicines
+                                      join s in context.StoreManagements
+                                      on m.MedicineId equals s.MedicineId
+                                      where m.UserId == id && m.Price > Price
+                                      orderby m.Price descending
+                                      select new { m.MedicineName, m.MedicineType, m.Expiry, m.Price, s.Stock, s.UserId }).ToList();
+
+                        foreach (var r in result)
+                        {
+                            dispobj = new AddMedicineValidation();
+                            dispobj.MedicineName = r.MedicineName;
+                            dispobj.MedicineType = r.MedicineType;
+                            dispobj.Expiry = r.Expiry;
+                            dispobj.Price = r.Price;
+                            dispobj.Stock = r.Stock;
+
+                            list.Add(dispobj);
+                        }
+                    }
+                    else if (PriceAttribute.Equals("GreaterThanEqual"))
+                    {
+                        var result = (from m in context.Medicines
+                                      join s in context.StoreManagements
+                                      on m.MedicineId equals s.MedicineId
+                                      where m.UserId == id && m.Price >= Price
+                                      orderby m.Price descending
+                                      select new { m.MedicineName, m.MedicineType, m.Expiry, m.Price, s.Stock, s.UserId }).ToList();
+
+                        foreach (var r in result)
+                        {
+                            dispobj = new AddMedicineValidation();
+                            dispobj.MedicineName = r.MedicineName;
+                            dispobj.MedicineType = r.MedicineType;
+                            dispobj.Expiry = r.Expiry;
+                            dispobj.Price = r.Price;
+                            dispobj.Stock = r.Stock;
+
+                            list.Add(dispobj);
+                        }
+                    }
+                    else if (PriceAttribute.Equals("LessThan"))
+                    {
+                        var result = (from m in context.Medicines
+                                      join s in context.StoreManagements
+                                      on m.MedicineId equals s.MedicineId
+                                      where m.UserId == id && m.Price < Price
+                                      orderby m.Price descending
+                                      select new { m.MedicineName, m.MedicineType, m.Expiry, m.Price, s.Stock, s.UserId }).ToList();
+
+                        foreach (var r in result)
+                        {
+                            dispobj = new AddMedicineValidation();
+                            dispobj.MedicineName = r.MedicineName;
+                            dispobj.MedicineType = r.MedicineType;
+                            dispobj.Expiry = r.Expiry;
+                            dispobj.Price = r.Price;
+                            dispobj.Stock = r.Stock;
+
+                            list.Add(dispobj);
+                        }
+                    }
+                    else if (PriceAttribute.Equals("LessThanEqual"))
+                    {
+                        var result = (from m in context.Medicines
+                                      join s in context.StoreManagements
+                                      on m.MedicineId equals s.MedicineId
+                                      where m.UserId == id && m.Price <= Price
+                                      orderby m.Price descending
+                                      select new { m.MedicineName, m.MedicineType, m.Expiry, m.Price, s.Stock, s.UserId }).ToList();
+
+                        foreach (var r in result)
+                        {
+                            dispobj = new AddMedicineValidation();
+                            dispobj.MedicineName = r.MedicineName;
+                            dispobj.MedicineType = r.MedicineType;
+                            dispobj.Expiry = r.Expiry;
+                            dispobj.Price = r.Price;
+                            dispobj.Stock = r.Stock;
+
+                            list.Add(dispobj);
+                        }
                     }
                 }
-                else if (StockAttribute.Equals("LessThanEqual"))
-                {
-                    var result = (from m in context.Medicines
-                                  join s in context.StoreManagements
-                                  on m.MedicineId equals s.MedicineId
-                                  where m.UserId == id && s.Stock <= Stock
-                                  select new { m.MedicineName, m.MedicineType, m.Expiry, m.Price, s.Stock, s.UserId }).ToList();
-
-                    foreach (var r in result)
-                    {
-                        dispobj = new AddMedicineValidation();
-                        dispobj.MedicineName = r.MedicineName;
-                        dispobj.MedicineType = r.MedicineType;
-                        dispobj.Expiry = r.Expiry;
-                        dispobj.Price = r.Price;
-                        dispobj.Stock = r.Stock;
-
-                        list.Add(dispobj);
-                    }
-                }
+               
             }
 
 
