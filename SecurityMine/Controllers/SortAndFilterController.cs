@@ -268,5 +268,163 @@ namespace SecurityMine.Controllers
             return View();
         }
 
+
+        public ActionResult FilterPerform(string MedicineName,int Stock,float Price,DateTime Expiry,string MedicineType,string StockAttribute)
+        {
+            AppIdentityDbContext context = new AppIdentityDbContext();
+            AddMedicineValidation dispobj;
+            List<AddMedicineValidation> list = new List<AddMedicineValidation>();
+            string id = User.Identity.GetUserId();
+
+            if(MedicineName.Equals("Medicine Name")==false)
+            {
+                var result = (from m in context.Medicines
+                              join s in context.StoreManagements
+                              on m.MedicineId equals s.MedicineId
+                              where m.UserId == id && m.MedicineName==MedicineName
+                              select new { m.MedicineName, m.MedicineType, m.Expiry, m.Price, s.Stock, s.UserId }).ToList();
+
+                foreach (var r in result)
+                {
+                    dispobj = new AddMedicineValidation();
+                    dispobj.MedicineName = r.MedicineName;
+                    dispobj.MedicineType = r.MedicineType;
+                    dispobj.Expiry = r.Expiry;
+                    dispobj.Price = r.Price;
+                    dispobj.Stock = r.Stock;
+
+                    list.Add(dispobj);
+                }
+            }
+            else if (MedicineType.Equals("Medicine Type") == false)
+            {
+                var result = (from m in context.Medicines
+                              join s in context.StoreManagements
+                              on m.MedicineId equals s.MedicineId
+                              where m.UserId == id && m.MedicineType==MedicineType
+                              select new { m.MedicineName, m.MedicineType, m.Expiry, m.Price, s.Stock, s.UserId }).ToList();
+
+                foreach (var r in result)
+                {
+                    dispobj = new AddMedicineValidation();
+                    dispobj.MedicineName = r.MedicineName;
+                    dispobj.MedicineType = r.MedicineType;
+                    dispobj.Expiry = r.Expiry;
+                    dispobj.Price = r.Price;
+                    dispobj.Stock = r.Stock;
+
+                    list.Add(dispobj);
+                }
+            }
+            else if (Stock!=0)
+            {
+                if(StockAttribute.Equals("EqualTo"))
+                {
+                    var result = (from m in context.Medicines
+                                  join s in context.StoreManagements
+                                  on m.MedicineId equals s.MedicineId
+                                  where m.UserId == id && s.Stock==Stock
+                                  select new { m.MedicineName, m.MedicineType, m.Expiry, m.Price, s.Stock, s.UserId }).ToList();
+
+                    foreach (var r in result)
+                    {
+                        dispobj = new AddMedicineValidation();
+                        dispobj.MedicineName = r.MedicineName;
+                        dispobj.MedicineType = r.MedicineType;
+                        dispobj.Expiry = r.Expiry;
+                        dispobj.Price = r.Price;
+                        dispobj.Stock = r.Stock;
+
+                        list.Add(dispobj);
+                    }
+                }
+                else if (StockAttribute.Equals("GreaterThan"))
+                {
+                    var result = (from m in context.Medicines
+                                  join s in context.StoreManagements
+                                  on m.MedicineId equals s.MedicineId
+                                  where m.UserId == id && s.Stock>Stock
+                                  select new { m.MedicineName, m.MedicineType, m.Expiry, m.Price, s.Stock, s.UserId }).ToList();
+
+                    foreach (var r in result)
+                    {
+                        dispobj = new AddMedicineValidation();
+                        dispobj.MedicineName = r.MedicineName;
+                        dispobj.MedicineType = r.MedicineType;
+                        dispobj.Expiry = r.Expiry;
+                        dispobj.Price = r.Price;
+                        dispobj.Stock = r.Stock;
+
+                        list.Add(dispobj);
+                    }
+                }
+                else if (StockAttribute.Equals("GreaterThanEqual"))
+                {
+                    var result = (from m in context.Medicines
+                                  join s in context.StoreManagements
+                                  on m.MedicineId equals s.MedicineId
+                                  where m.UserId == id && s.Stock >= Stock
+                                  select new { m.MedicineName, m.MedicineType, m.Expiry, m.Price, s.Stock, s.UserId }).ToList();
+
+                    foreach (var r in result)
+                    {
+                        dispobj = new AddMedicineValidation();
+                        dispobj.MedicineName = r.MedicineName;
+                        dispobj.MedicineType = r.MedicineType;
+                        dispobj.Expiry = r.Expiry;
+                        dispobj.Price = r.Price;
+                        dispobj.Stock = r.Stock;
+
+                        list.Add(dispobj);
+                    }
+                }
+                else if (StockAttribute.Equals("LessThan"))
+                {
+                    var result = (from m in context.Medicines
+                                  join s in context.StoreManagements
+                                  on m.MedicineId equals s.MedicineId
+                                  where m.UserId == id && s.Stock < Stock
+                                  select new { m.MedicineName, m.MedicineType, m.Expiry, m.Price, s.Stock, s.UserId }).ToList();
+
+                    foreach (var r in result)
+                    {
+                        dispobj = new AddMedicineValidation();
+                        dispobj.MedicineName = r.MedicineName;
+                        dispobj.MedicineType = r.MedicineType;
+                        dispobj.Expiry = r.Expiry;
+                        dispobj.Price = r.Price;
+                        dispobj.Stock = r.Stock;
+
+                        list.Add(dispobj);
+                    }
+                }
+                else if (StockAttribute.Equals("LessThanEqual"))
+                {
+                    var result = (from m in context.Medicines
+                                  join s in context.StoreManagements
+                                  on m.MedicineId equals s.MedicineId
+                                  where m.UserId == id && s.Stock <= Stock
+                                  select new { m.MedicineName, m.MedicineType, m.Expiry, m.Price, s.Stock, s.UserId }).ToList();
+
+                    foreach (var r in result)
+                    {
+                        dispobj = new AddMedicineValidation();
+                        dispobj.MedicineName = r.MedicineName;
+                        dispobj.MedicineType = r.MedicineType;
+                        dispobj.Expiry = r.Expiry;
+                        dispobj.Price = r.Price;
+                        dispobj.Stock = r.Stock;
+
+                        list.Add(dispobj);
+                    }
+                }
+            }
+
+
+
+            return View(list);
+
+        }
+
     }
 }

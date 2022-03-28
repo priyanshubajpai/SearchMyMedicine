@@ -19,27 +19,37 @@
 
         <div id="ExpiryFilter" style="display:none;">
             <label for="Expiry" class="control-label">Select Date</label>
-            <input type="date" name="Expiry" class="form-control"/>
+            <input type="date" name="Expiry" class="form-control" required value="2013-01-08"/>
         </div>
 
         <div id="PriceFilter" style="display:none;">
             <label for="Price" class="control-label">Enter Price</label>
-            <input type="number" step="any" name="Price" class="form-control"/>
+            <input type="number" step="any" name="Price" class="form-control" required value="0"/>
         </div>
 
         <div id="StockFilter" style="display:none;">
             <label for="Stock" class="control-label">Enter Stock</label>
-            <input type="number" name="Stock" class="form-control"/>
+            <input type="number" name="Stock" class="form-control" required value="0" />
+            <label class="control-label">Select Stock Comparison Attribute</label>
+            <select name="StockAttribute" id="StockAttribute" class="form-control">
+                <option>Select Filter Condition</option>
+                <option value="GreaterThan">Greater Than Entered Stock</option>
+                <option value="GreaterThanEqual">Greater Than & Equals To Entered Stock</option>
+                <option value="LessThan">Less Than Entered Stock</option>
+                <option value="LessThanEqual">Less Than & Equals To Entered Stock</option>
+                <option value="EqualTo">Equal to Stock Value</option>
+            </select>
         </div>
 
+
         <div id="MedicineNameFilter" style="display:none;">
-            <label for="MedicineName" class="control-label">Enter Medicine Name</label>
-            <input type="text" name="MedicineName" class="form-control"/>
+            <label for="MedicineName" class="control-label">Search Medicine</label>
+            <input type="text" name="MedicineName" class="form-control" required value="Medicine Name"/>
         </div>
 
         <div id="MedicineTypeFilter" style="display:none;">
             <label for="MedicineType" class="control-label">Enter Medicine Type</label>
-            <input type="text" name="MedicineType"class="form-control" />
+            <input type="text" name="MedicineType"class="form-control" required value="Medicine Type" />
         </div>
         <br />
         <div id="SubmitButton" style="display:none;">

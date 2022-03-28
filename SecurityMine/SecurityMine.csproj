@@ -239,6 +239,7 @@
     <Content Include="Views\Admin\UserAddedSuccessfully.cshtml" />
     <Content Include="Views\SortAndFilter\MedicineSorting.cshtml" />
     <Content Include="Views\SortAndFilter\FilterMedicine.cshtml" />
+    <Content Include="Views\SortAndFilter\FilterPerform.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

@@ -1,0 +1,39 @@
+﻿@using SecurityMine.Models
+@model List<AddMedicineValidation>
+
+@{
+    ViewBag.Title = "FilterPerform";
+}
+
+<center>
+    <h2><strong>Filter</strong></h2>
+</center>
+
+
+<table class="table table-striped">
+    <tr>
+        <td><strong>Medicine Name</strong></td>
+        <td><strong>Medicine Type</strong></td>
+        <td><strong>Expiry</strong></td>
+        <td><strong>Price</strong></td>
+        <td><strong>Stock</strong></td>
+    </tr>
+    @foreach (AddMedicineValidation data in Model)
+    {
+        <tr>
+            <td>@data.MedicineName</td>
+            <td>@data.MedicineType</td>
+            <td>@data.Expiry</td>
+            <td>@data.Price</td>
+            <td>@data.Stock</td>
+
+            <td>
+                @Html.ActionLink("Delete", "DeleteMedicine", "Custom", new { MedicineName = data.MedicineName }, new { @class = "btn btn-danger" })
+            </td>
+            <td>
+                @Html.ActionLink("Update Price & Stock", "UpdateStockAndPrice", "Custom", new { MedicineName = data.MedicineName }, new { @class = "btn btn-info" })
+            </td>
+        </tr>
+    }
+</table>
+
